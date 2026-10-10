@@ -1,10 +1,7 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Odin Primes Wheel-210 research track, with clearly labeled user-reported benchmark results.">
+<meta name="description" content="Odin Wheel-210 open-source sieve and verified public CI benchmark results.">
 <title>Wheel-210 · Odin Primes</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
@@ -36,88 +33,76 @@ h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#9
 .fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:900px}
 footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
 @media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}.topnav{gap:14px}}
-</style>
-</head>
-<body>
-<main class="wrapper">
-<header class="top">
-<div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
-<nav class="topnav" aria-label="Tracks and links">
-<a href="./">Base</a><a href="./wheel.html" aria-current="page">Wheel-210</a>
-<a href="https://github.com/megaalive/odin-primes-drag">Repository</a>
-<a href="https://github.com/PlummersSoftwareLLC/Primes">Competition</a>
-</nav>
-</header>
-<p class="eyebrow">WHEEL TRACK · RESEARCH REPORT</p>
-<h1>Wheel-210. <span>Challenging.</span></h1>
-<p class="intro">An independent Odin wheel-sieve candidate. This page records a developer-reported laptop run, not a verified GitHub Actions benchmark or official PrimeView placement. The <a href="./">Base track</a> maintains its own separate hardware and CI evidence.</p>
-<div class="status" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="status-label">Loading source-reported measurements…</span></div>
-<section aria-labelledby="summary-title">
-<div class="section-header"><h2 id="summary-title">Reported laptop measurements</h2><span class="small">Five-second runs · limit 1,000,000</span></div>
+</style></head>
+<body><main class="wrapper">
+<header class="top"><div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Tracks and links"><a href="./">Base</a><a href="./wheel.html" aria-current="page">Wheel-210</a><a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">Wheel source</a><a href="https://github.com/PlummersSoftwareLLC/Primes">Competition</a></nav></header>
+<p class="eyebrow">WHEEL-210 · PUBLIC CI</p><h1>Wheel-210. <span>Measured.</span></h1>
+<p class="intro">The source, tests and checksum-pinned Odin dev-2026-10 build are <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">available in this repository</a>. The primary figures below come from the actual GitHub Actions runner. The <a href="./">Base track</a> is measured independently; developer-reported laptop figures appear separately, not as CI evidence.</p>
+<div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot" aria-hidden="true"></span><span id="status-label">Loading verified CI evidence…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI runs ↗</a></div>
+<section aria-labelledby="summary-title"><div class="section-header"><h2 id="summary-title">Latest verified CI measurement</h2><span class="small">Limit 1,000,000 · five-second tests</span></div>
 <div class="cards">
-<div class="card"><div class="label">Wheel-210 · 1 worker</div><div class="value" id="single">—</div><div class="unit">complete sieves / second · reported</div></div>
-<div class="card"><div class="label">Wheel-210 · parallel</div><div class="value" id="multi">—</div><div class="unit">complete sieves / second · reported</div></div>
-<div class="card"><div class="label">Reported benchmark CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit" id="cpu-threads">Device information pending</div></div>
-</div>
-</section>
-<section aria-labelledby="evidence-title">
-<div class="section-header"><h2 id="evidence-title">Run provenance</h2><span class="small">Reported values, not independently reproduced</span></div>
-<div class="panel"><div class="meta">
+<div class="card"><div class="label">Wheel-210 · single</div><div class="value" id="single">—</div><div class="unit">complete sieves / second · CI</div></div>
+<div class="card"><div class="label">Wheel-210 · parallel</div><div class="value" id="multi">—</div><div class="unit">complete sieves / second · CI</div></div>
+<div class="card"><div class="label">Actual GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit" id="cpu-threads">No CI host metadata available</div></div>
+</div></section>
+<section aria-labelledby="hardware-title"><div class="section-header"><h2 id="hardware-title">Runner &amp; build evidence</h2><span class="small">Captured by public CI, not reported from another device</span></div><div class="panel"><div class="meta">
 <div><div class="key">CPU model</div><div class="datum" id="cpu">—</div></div>
 <div><div class="key">Odin compiler</div><div class="datum" id="compiler">—</div></div>
-<div><div class="key">Build options</div><div class="datum" id="flags">—</div></div>
-<div><div class="key">Algorithm tags</div><div class="datum" id="tags">—</div></div>
-<div><div class="key">Source / verification</div><div class="datum" id="provenance">—</div></div>
-<div><div class="key">Reported date</div><div class="datum" id="date">—</div></div>
-</div></div>
-</section>
-<section aria-labelledby="lanes-title">
-<div class="section-header"><h2 id="lanes-title">Raw reported lanes</h2><span class="small">No cross-hardware competitor ratios</span></div>
-<div class="panel tablewrap"><table class="table">
-<thead><tr><th scope="col">Mode</th><th scope="col">Workers</th><th scope="col">Passes</th><th scope="col">Seconds</th><th scope="col">Passes/s</th></tr></thead>
-<tbody id="lanes"><tr><td colspan="5">Loading data…</td></tr></tbody>
-</table></div>
-</section>
-<section aria-labelledby="notes-title">
-<div class="section-header"><h2 id="notes-title">Evidence and submission readiness</h2></div>
-<p class="fineprint">Wheel-210 is evaluated as a separate algorithm category, <code>algorithm=wheel</code>, with a proposed <code>faithful=yes,bits=1</code> classification pending upstream review. The implementation is being independently packaged and checked before any submission. The reported CPU, compiler version and throughput have not been reproduced in the public CI; the private source is not published here. Competing implementations measured on other CPU models cannot establish wins or a common leaderboard ranking. The official competition requires a reproducible Dockerfile, documented source, correct sieve output and a pull request against <code>drag-race</code>.</p>
-</section>
-<footer>Separate tracks: <a href="./">Base CI results</a> · <a href="https://github.com/PlummersSoftwareLLC/Primes">Upstream rules and competition</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView</a>. Reported measurements should not be mistaken for official rankings.</footer>
-</main>
-<script>
+<div><div class="key">Logical CPUs / affinity</div><div class="datum" id="affinity">—</div></div>
+<div><div class="key">Build flags</div><div class="datum" id="flags">—</div></div>
+<div><div class="key">Source commit</div><div class="datum" id="revision">—</div></div>
+<div><div class="key">Measured at (UTC)</div><div class="datum" id="date">—</div></div>
+</div></div></section>
+<section aria-labelledby="lanes-title"><div class="section-header"><h2 id="lanes-title">CI output lanes</h2><span class="small">algorithm=wheel · bits=1 · proposed faithful=yes</span></div>
+<div class="panel tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
+<tbody id="lanes"><tr><td colspan="5">No verified result published.</td></tr></tbody></table></div></section>
+<section aria-labelledby="laptop-title"><div class="section-header"><h2 id="laptop-title">Developer-reported laptop run</h2><span class="small">Not independently reproduced · different CPU</span></div><div class="panel">
+<p class="fineprint" id="laptop-note">Historical report loading…</p>
+<div class="tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
+<tbody id="laptop-lanes"><tr><td colspan="5">No laptop data available.</td></tr></tbody></table></div></div></section>
+<section aria-labelledby="notes-title"><div class="section-header"><h2 id="notes-title">Interpretation</h2></div>
+<p class="fineprint">This Wheel-210 code is public and verified with an independent full-membership oracle in CI. Its output declares <code>algorithm=wheel,faithful=yes,bits=1</code>, but faithfulness classification has not been approved by upstream maintainers. These values are shared-runner screening measurements, <strong>not official PrimeView rankings</strong>. Do not compare different CPU models as if they were paired races.</p></section>
+<footer><a href="./">Base CI results</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">Wheel source</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView</a></footer>
+</main><script>
 "use strict";
 const el=id=>document.getElementById(id);
-const num=(v,d=1)=>Number(v).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
-const set=(id,v)=>{el(id).textContent=v==null?"—":String(v)};
-async function load(){
-  try{
-    const response=await fetch("./wheel210.json",{cache:"no-store"});
-    if(!response.ok)throw Error("Data not available");
-    const d=await response.json();
-    if(d.schema_version!==1||d.status!=="reported"||!Array.isArray(d.lanes)||d.lanes.length!==2)throw Error("Unrecognized research data");
-    const a=d.lanes.find(x=>x.mode==="single"),b=d.lanes.find(x=>x.mode==="multi");
-    if(!a||!b||a.workers!==1)throw Error("Incomplete data");
-    for(const lane of [a,b])if(!(lane.passes>0&&lane.seconds>=5&&lane.workers>=1))throw Error("Invalid reported lane");
-    set("single",num(a.passes/a.seconds));set("multi",num(b.passes/b.seconds));
-    set("cpu-short",d.host.cpu_model);set("cpu-threads",d.host.thread_description);
-    set("cpu",d.host.cpu_model);set("compiler",d.compiler);
-    set("flags",d.build_flags);set("tags",d.classification);
-    set("provenance",d.evidence);set("date",d.reported_date);
-    const body=el("lanes");body.replaceChildren();
-    for(const item of d.lanes){
-      const row=document.createElement("tr");
-      for(const val of [item.mode,item.workers,item.passes,num(item.seconds,4),num(item.passes/item.seconds)]){
-        const td=document.createElement("td");td.textContent=String(val);row.appendChild(td);
-      }
-      body.appendChild(row);
-    }
-    set("status-label","Developer-reported data · independent verification pending");
-  }catch(error){
-    set("status-label","Reported data unavailable; no verified wheel benchmark published");
-    el("lanes").replaceChildren();
-  }
+const fmt=(v,p=1)=>Number(v).toLocaleString("en-US",{minimumFractionDigits:p,maximumFractionDigits:p});
+const put=(id,v)=>{el(id).textContent=v==null?"—":String(v)};
+const fetchData=async path=>{const response=await fetch(path,{cache:"no-store"});if(!response.ok)throw Error("data unavailable");return response.json()};
+function render(id,lanes){
+ const body=el(id);body.replaceChildren();
+ for(const lane of lanes){const tr=document.createElement("tr");
+  for(const value of [lane.mode,lane.workers,lane.passes,fmt(lane.seconds,4),fmt(lane.passes_per_second??lane.passes/lane.seconds)]){
+   const td=document.createElement("td");td.textContent=String(value);tr.appendChild(td);}
+  body.appendChild(tr);}
 }
-load();
-</script>
-</body>
-</html>
+async function ci(){
+ try{
+  const data=await fetchData("./wheel210-ci.json");
+  if(data.status!=="passed"||data.source!=="github-actions"||data.track!=="wheel-210"||!Array.isArray(data.lanes)||data.lanes.length!==2)throw Error("invalid CI");
+  const single=data.lanes.find(x=>x.label==="odin_wheel210");
+  const multi=data.lanes.find(x=>x.label==="odin_wheel210_mt");
+  if(!single||!multi||single.workers!==1||!data.host?.cpu_model||!data.run_id||!data.commit)throw Error("incomplete CI");
+  for(const lane of [single,multi])if(!(lane.passes>0&&lane.seconds>=5&&lane.workers>=1))throw Error("invalid lane");
+  put("single",fmt(single.passes_per_second));put("multi",fmt(multi.passes_per_second));
+  put("cpu-short",data.host.cpu_model);put("cpu-threads",multi.workers+" benchmark workers");
+  put("cpu",data.host.cpu_model);put("compiler",data.compiler);
+  put("affinity",data.host.logical_cpus+" / "+data.host.affinity_cpus);put("flags",data.build_flags);
+  put("revision",data.commit.slice(0,12));put("date",new Date(data.measured_at_utc).toLocaleString("en-US",{timeZone:"UTC"})+" UTC");
+  render("lanes",data.lanes);
+  put("status-label","Verified public GitHub Actions screening");
+  el("status-dot").className="dot ok";
+  el("run-link").href="https://github.com/megaalive/odin-primes-drag/actions/runs/"+encodeURIComponent(data.run_id);
+ }catch(error){put("status-label","No verified Wheel-210 CI measurement published");el("status-dot").className="dot unavailable"}
+}
+async function laptop(){
+ try{
+  const d=await fetchData("./wheel210-reported.json");
+  if(d.status!=="reported"||d.track!=="wheel-210"||!Array.isArray(d.lanes)||d.lanes.length!==2)throw Error("invalid laptop report");
+  put("laptop-note",d.host.cpu_model+" · "+d.compiler+" · "+d.reported_date+". Developer-reported only; not a same-CPU competitor comparison.");
+  render("laptop-lanes",d.lanes);
+ }catch(error){put("laptop-note","Historical laptop report unavailable")}
+}
+Promise.all([ci(),laptop()]);
+</script></body></html>

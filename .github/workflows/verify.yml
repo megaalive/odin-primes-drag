@@ -25,8 +25,11 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
-              "wheel.html", "wheel210.json",
+              "wheel.html", "wheel210-reported.json",
+              "wheel210/Dockerfile", "wheel210/README.md",
+              "wheel210/main.odin", "wheel210/tests.odin",
               "tools/ci_report.py", "tools/test_ci_report.py",
+              "tools/wheel_ci_report.py", "tools/test_wheel_ci_report.py",
               "src/main.odin", "src/tests.odin",
               "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
           }
@@ -42,7 +45,7 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
-          d=json.loads(Path('wheel210.json').read_text())
+          d=json.loads(Path('wheel210-reported.json').read_text())
           assert d['schema_version']==1 and d['status']=='reported'
           assert d['track']=='wheel-210' and d['limit']==1000000
           assert d['compiler'].startswith('Odin dev-2026-10')
@@ -107,9 +110,46 @@ jobs:
           retention-days: 90
           if-no-files-found: error
 
+  wheel210:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build checksum-pinned October Odin and Wheel-210
+        run: docker build --target build -t odin-wheel210:build wheel210
+      - name: Verify independent wheel oracle
+        run: docker run --rm odin-wheel210:build sh -lc 'odin test . -define:ODIN_TEST_THREADS=1'
+      - name: Record wheel compiler version
+        run: docker run --rm odin-wheel210:build odin version > "$RUNNER_TEMP/wheel-version.txt"
+      - name: Build wheel runtime
+        run: docker build -t odin-wheel210 wheel210
+      - name: Measure wheel five-second single and parallel lanes
+        run: docker run --rm odin-wheel210 > "$RUNNER_TEMP/wheel-output.txt"
+      - name: Generate validated wheel CI JSON with host metadata
+        run: |
+          python3 tools/wheel_ci_report.py --input "$RUNNER_TEMP/wheel-output.txt" --version-file "$RUNNER_TEMP/wheel-version.txt" --output "$RUNNER_TEMP/wheel-pages/wheel210-ci.json"
+      - name: Upload Wheel-210 public CI record
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel210-ci-${{ github.run_id }}
+          path: ${{ runner.temp }}/wheel-pages/wheel210-ci.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Upload Wheel-210 raw output
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel210-raw-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/wheel-output.txt
+            ${{ runner.temp }}/wheel-version.txt
+          if-no-files-found: error
+          retention-days: 90
+
   pages:
     if: github.event_name != 'pull_request'
-    needs: correctness
+    needs: [correctness, wheel210]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -127,9 +167,14 @@ jobs:
         with:
           name: odin-ci-results-${{ github.run_id }}
           path: site
+      - name: Download verified Wheel-210 CI JSON
+        uses: actions/download-artifact@v4
+        with:
+          name: wheel210-ci-${{ github.run_id }}
+          path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel210.json site/
+          cp index.html wheel.html wheel210-reported.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
