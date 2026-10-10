@@ -49,7 +49,7 @@ jobs:
           assert len(d['lanes'])==2
           assert {x['mode'] for x in d['lanes']}=={'single','multi'}
           assert all(x['passes']>0 and x['seconds']>=5 for x in d['lanes'])
-          assert 'independent' in d['evidence']
+          assert 'Developer-provided' in d['evidence'] and 'pending' in d['evidence']
           print('Wheel track is correctly labeled as reported, not CI-verified.')
           PY
       - name: Build pinned Odin compiler and benchmark
