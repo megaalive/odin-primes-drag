@@ -14,7 +14,19 @@ a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-v
 .top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid #253345;padding-bottom:24px}
 .wordmark{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.04em}
 .symbol{display:grid;place-items:center;border-radius:12px;width:42px;height:42px;background:#162d43;color:#79d5fc;border:1px solid #315272}
-.topnav{display:flex;gap:22px;font-size:14px}
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px}
+.tracknav{display:flex;gap:8px;flex-wrap:wrap}
+.track{display:flex;align-items:stretch;min-width:0;white-space:nowrap;border:1px solid #30465e;border-radius:10px;overflow:hidden;background:#111e2d}
+.track.is-active{border-color:#528db8;background:#18334c}
+.track a{display:inline-flex;align-items:center;min-height:38px;text-decoration:none}
+.track-page{padding:0 13px;font-weight:700;color:#e6f2ff}
+.track-source{padding:0 11px;border-left:1px solid #30465e;color:#99c4e2;font-size:12px}
+.track a:hover{background:#294b66;color:#fff}
+.track-source:focus-visible,.track-page:focus-visible{outline-offset:-3px}
+.nav-competition{color:#9fbdd4;white-space:nowrap;padding:8px 2px}
+@media(max-width:720px){.topnav{width:100%;gap:8px}.tracknav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px}.track-page{flex:1;justify-content:center}.nav-competition{padding:4px 2px}}
+@media(max-width:370px){.tracknav{grid-template-columns:1fr}}
+
 .eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
 h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
 .intro{max-width:690px;color:#aab9c9;font-size:16px;line-height:1.65;margin:0}
@@ -32,7 +44,7 @@ h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#9
 .table td{font-size:14px;padding:16px 12px;border-bottom:1px solid #223246}.table tbody tr:last-child td{border:0}.table th:not(:first-child),.table td:not(:first-child){text-align:right}
 .lane{font-weight:650;color:#f1f7fc}.muted{color:#90a6bc}.fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:850px}
 footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
-@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}.topnav{gap:14px}}
+@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}}
 @media(prefers-reduced-motion:no-preference){a{transition:color .18s}}
 </style>
 </head>
@@ -40,7 +52,19 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <main class="wrapper">
 <header class="top">
 <div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
-<nav class="topnav" aria-label="Links"><a href="./" aria-current="page">Base</a><a href="./wheel.html">Wheel-210</a><a href="https://github.com/megaalive/odin-primes-drag">Source</a><a href="https://github.com/megaalive/odin-primes-drag/actions">CI runs</a><a href="https://github.com/PlummersSoftwareLLC/Primes">Competition</a></nav>
+<nav class="topnav" aria-label="Benchmark tracks and code">
+<div class="tracknav" aria-label="Algorithm tracks">
+<div class="track is-active">
+<a class="track-page" href="./" aria-current="page">Base</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/src/main.odin" aria-label="Base source code on GitHub" title="Base source code">Source ↗</a>
+</div>
+<div class="track">
+<a class="track-page" href="./wheel.html">Wheel-210</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin" aria-label="Wheel-210 source code on GitHub" title="Wheel-210 source code">Source ↗</a>
+</div>
+</div>
+<a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
+</nav>
 </header>
 <p class="eyebrow">BASE TRACK · CI PERFORMANCE REPORT</p>
 <h1>Prime sieve. <span>Measured.</span></h1>
