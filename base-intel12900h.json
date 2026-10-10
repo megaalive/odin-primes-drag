@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "status": "reported",
+  "source": "sol-local-measurement",
+  "track": "base",
+  "title": "Odin Base E22 · local Windows Intel i9-12900H · 2026-10-11",
+  "date_local": "2026-10-11",
+  "original_source_commit": "f3279ab5b93093b8ba89a0e77b3a17a0921d20b1",
+  "source_compatibility": {
+    "status": "unmodified original did not compile with Odin dev-2026-10",
+    "minimal_change": "Prepended #+feature using-stmt to src/main.odin and src/tests.odin; no algorithm, timing-loop, allocation, or worker changes",
+    "tests_passed": 14,
+    "original_compiler_failure": "using procedure parameters are opt-in under October Odin",
+    "strict_original_source_verdict": "inconclusive",
+    "measurement_classification": "compatibility-source, developer-reported; not independently replicated in CI"
+  },
+  "host": {
+    "cpu_model": "Intel Core i9-12900H",
+    "physical_cores": 14,
+    "logical_cpus": 20,
+    "os": "Windows 11 Home Single Language 10.0.26300",
+    "arch": "x64",
+    "ram_mib": 16088,
+    "power_status": "AC connected / 100% reported; Acer power plan unchanged",
+    "thermal_monitoring": "unavailable (WMI access denied)",
+    "background_load": "ChatGPT and Remote Desktop were active"
+  },
+  "compiler": {
+    "version": "dev-2026-10-nightly:84bc3fc",
+    "release": "dev-2026-10",
+    "official_windows_archive_sha256": "b6b2e426a8b6f147b74ec7e18bef8df27cf40fe16193159df7ca09a0cc0c2011"
+  },
+  "build_flags": "-o:speed -microarch:native -no-bounds-check",
+  "sieve_limit": 1000000,
+  "known_prime_count": 78498,
+  "benchmark": {
+    "round_count": 7,
+    "seconds_min": 5,
+    "per_mode": "complete five-second timed passes, independent processes",
+    "worker_counts": [
+      1,
+      20
+    ],
+    "round_order": "alternating Base/Wheel; only Base lane data shown",
+    "warmup": "one untimed invocation of each executable",
+    "protocol": "five-second pause before each executable",
+    "timing_caveat": "Base performs four independent 5-second lanes in each invocation; unequal total process duty cycle vs Wheel and hybrid-core/thermal uncertainty limit matched comparisons."
+  },
+  "classification": "algorithm=base,faithful=yes; bits=1 for primary lanes, bits=8 for byte reference lanes",
+  "lanes": [
+    {
+      "label": "odin_bit_moe",
+      "mode": "single",
+      "bits": 1,
+      "workers": 1,
+      "rounds": [
+        {
+          "round": 1,
+          "passes": 49114,
+          "seconds": 5.0000594,
+          "passes_per_second": 9822.68330652232
+        },
+        {
+          "round": 2,
+          "passes": 47121,
+          "seconds": 5.0000281,
+          "passes_per_second": 9424.147036293656
+        },
+        {
+          "round": 3,
+          "passes": 48958,
+          "seconds": 5.0000493,
+          "passes_per_second": 9791.503455775926
+        },
+        {
+          "round": 4,
+          "passes": 49082,
+          "seconds": 5.0000006,
+          "passes_per_second": 9816.39882203214
+        },
+        {
+          "round": 5,
+          "passes": 47017,
+          "seconds": 5.0000119,
+          "passes_per_second": 9403.377619961266
+        },
+        {
+          "round": 6,
+          "passes": 47370,
+          "seconds": 5.0000821,
+          "passes_per_second": 9473.844439474304
+        },
+        {
+          "round": 7,
+          "passes": 48610,
+          "seconds": 5.0000861,
+          "passes_per_second": 9721.832590042799
+        }
+      ],
+      "median_passes_per_second": 9721.832590042799
+    },
+    {
+      "label": "odin_bit_threaded_moe",
+      "mode": "parallel",
+      "bits": 1,
+      "workers": 20,
+      "rounds": [
+        {
+          "round": 1,
+          "passes": 201043,
+          "seconds": 5.0047403,
+          "passes_per_second": 40170.5159406573
+        },
+        {
+          "round": 2,
+          "passes": 194595,
+          "seconds": 5.0085052,
+          "passes_per_second": 38852.909646574786
+        },
+        {
+          "round": 3,
+          "passes": 195241,
+          "seconds": 5.0066655,
+          "passes_per_second": 38996.214146920734
+        },
+        {
+          "round": 4,
+          "passes": 191571,
+          "seconds": 5.0049445,
+          "passes_per_second": 38276.34851894961
+        },
+        {
+          "round": 5,
+          "passes": 191609,
+          "seconds": 5.0043587,
+          "passes_per_second": 38288.4224506129
+        },
+        {
+          "round": 6,
+          "passes": 191457,
+          "seconds": 5.0052581,
+          "passes_per_second": 38251.17430008255
+        },
+        {
+          "round": 7,
+          "passes": 187502,
+          "seconds": 5.0076722,
+          "passes_per_second": 37442.94604586938
+        }
+      ],
+      "median_passes_per_second": 38288.4224506129
+    },
+    {
+      "label": "odin_byte_moe",
+      "mode": "single",
+      "bits": 8,
+      "workers": 1,
+      "rounds": [
+        {
+          "round": 1,
+          "passes": 9023,
+          "seconds": 5.0004627,
+          "passes_per_second": 1804.4330177685358
+        },
+        {
+          "round": 2,
+          "passes": 9006,
+          "seconds": 5.0001425,
+          "passes_per_second": 1801.148667262983
+        },
+        {
+          "round": 3,
+          "passes": 8923,
+          "seconds": 5.0001135,
+          "passes_per_second": 1784.5594904995655
+        },
+        {
+          "round": 4,
+          "passes": 9072,
+          "seconds": 5.0004159,
+          "passes_per_second": 1814.2490907606305
+        },
+        {
+          "round": 5,
+          "passes": 8401,
+          "seconds": 5.0002099,
+          "passes_per_second": 1680.1294681649265
+        },
+        {
+          "round": 6,
+          "passes": 8970,
+          "seconds": 5.0003023,
+          "passes_per_second": 1793.8915413174118
+        },
+        {
+          "round": 7,
+          "passes": 9026,
+          "seconds": 5.0004646,
+          "passes_per_second": 1805.0322764008768
+        }
+      ],
+      "median_passes_per_second": 1801.148667262983
+    },
+    {
+      "label": "odin_byte_threaded_moe",
+      "mode": "parallel",
+      "bits": 8,
+      "workers": 20,
+      "rounds": [
+        {
+          "round": 1,
+          "passes": 57854,
+          "seconds": 5.0040052,
+          "passes_per_second": 11561.538745003703
+        },
+        {
+          "round": 2,
+          "passes": 56924,
+          "seconds": 5.0043125,
+          "passes_per_second": 11374.989071925464
+        },
+        {
+          "round": 3,
+          "passes": 58306,
+          "seconds": 5.0037756,
+          "passes_per_second": 11652.401038927484
+        },
+        {
+          "round": 4,
+          "passes": 55528,
+          "seconds": 5.0042213,
+          "passes_per_second": 11096.231895260107
+        },
+        {
+          "round": 5,
+          "passes": 55615,
+          "seconds": 5.0044358,
+          "passes_per_second": 11113.140865949363
+        },
+        {
+          "round": 6,
+          "passes": 56755,
+          "seconds": 5.0042436,
+          "passes_per_second": 11341.374348762718
+        },
+        {
+          "round": 7,
+          "passes": 56348,
+          "seconds": 5.0041936,
+          "passes_per_second": 11260.1558820586
+        }
+      ],
+      "median_passes_per_second": 11341.374348762718
+    }
+  ]
+}

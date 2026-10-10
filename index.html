@@ -68,7 +68,7 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </header>
 <p class="eyebrow">BASE TRACK · CI PERFORMANCE REPORT</p>
 <h1>Prime sieve. <span>Measured.</span></h1>
-<p class="intro">The selected Odin base-sieve track. <a href="./wheel.html">Explore the separate Wheel-210 track ↗</a> Its reported laptop measurements are not mixed with verified CI data. Actual CPU details are shown alongside each run. These measurements are screening results, <strong>not official PrimeView rankings</strong>.</p>
+<p class="intro">Base and <a href="./wheel.html">Wheel-210</a> are two complementary Odin sieve strategies pursuing the same goal: challenging the fastest <strong>non-Odin</strong> implementations. GitHub Actions results and Intel laptop measurements are reported separately, with their own CPU, compiler and evidence. Neither is an official PrimeView ranking.</p>
 <div class="status" role="status" aria-live="polite"><span id="status-dot" class="dot"></span><span id="status-label">Loading published evidence…</span> <a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
 <section aria-labelledby="summary-title">
 <div class="section-header"><h2 id="summary-title">Latest verified run</h2><span class="small" id="observed">No measured results published yet</span></div>
@@ -95,6 +95,28 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <thead><tr><th scope="col">Implementation</th><th scope="col">Workers</th><th scope="col">Bits</th><th scope="col">Passes</th><th scope="col">Seconds</th><th scope="col">Passes/s</th></tr></thead>
 <tbody id="lanes"><tr><td colspan="6" class="muted" style="text-align:left">Measurements not yet available.</td></tr></tbody>
 </table></div>
+</section>
+<section aria-labelledby="intel-title">
+<div class="section-header"><h2 id="intel-title">Intel Core i9-12900H · local Base measurement</h2><span class="small">7 rounds · Windows 11 · Odin dev-2026-10 · reported by Sol</span></div>
+<div class="cards">
+<div class="card"><div class="label">Base packed-bit · 1 worker</div><div class="value" id="intel-single">—</div><div class="unit">median complete sieves / second</div></div>
+<div class="card"><div class="label">Base packed-bit · 20 workers</div><div class="value" id="intel-multi">—</div><div class="unit">median complete sieves / second</div></div>
+<div class="card"><div class="label">Measurement status</div><div class="value" style="font-size:21px;line-height:1.35" id="intel-status">Loading…</div><div class="unit">Independent of GitHub Actions runner data</div></div>
+</div>
+<div class="panel" style="margin-top:14px">
+<div class="meta">
+<div><div class="key">Measured CPU and OS</div><div class="datum" id="intel-cpu">—</div></div>
+<div><div class="key">Compiler and build</div><div class="datum" id="intel-compiler">—</div></div>
+<div><div class="key">Original source revision</div><div class="datum" id="intel-commit">—</div></div>
+<div><div class="key">Correctness</div><div class="datum" id="intel-tests">—</div></div>
+</div>
+</div>
+<div class="panel tablewrap" style="margin-top:14px"><table class="table">
+<thead><tr><th scope="col">Round</th><th scope="col">Single passes</th><th scope="col">Single/s</th><th scope="col">Multi passes</th><th scope="col">Multi/s</th></tr></thead>
+<tbody id="intel-rows"><tr><td colspan="5" class="muted" style="text-align:left">Local evidence is loading…</td></tr></tbody>
+</table></div>
+<p class="fineprint" id="intel-notes">This local measurement is not a GitHub Actions result.</p>
+<p class="fineprint"><a href="./base-intel12900h.json">Read all seven rounds, including byte lanes and provenance ↗</a></p>
 </section>
 <section aria-labelledby="notes-title">
 <div class="section-header"><h2 id="notes-title">Reading these results</h2></div>
@@ -148,6 +170,36 @@ async function load(){
  }
 }
 load();
+async function loadIntelBase(){
+  try{
+    const r=await fetch("./base-intel12900h.json",{cache:"no-store"});
+    if(!r.ok)throw new Error("Local results unavailable");
+    const d=await r.json();
+    if(d.status!=="reported"||d.source!=="sol-local-measurement"||d.track!=="base"||d.lanes?.length!==4)throw new Error("Unexpected evidence");
+    const one=d.lanes.find(x=>x.label==="odin_bit_moe"),multi=d.lanes.find(x=>x.label==="odin_bit_threaded_moe");
+    if(!one||!multi||one.rounds.length!==7||multi.rounds.length!==7||one.workers!==1||multi.workers!==20)throw new Error("Incomplete local results");
+    for(const lane of [one,multi])for(const value of lane.rounds)if(!(value.passes>0&&value.seconds>=5))throw new Error("Invalid local sample");
+    setText("intel-single",number(one.median_passes_per_second));
+    setText("intel-multi",number(multi.median_passes_per_second));
+    setText("intel-status","Locally measured");
+    setText("intel-cpu",d.host.cpu_model+" · "+d.host.os);
+    setText("intel-compiler",d.compiler.version+" · "+d.build_flags);
+    setText("intel-commit",d.original_source_commit.slice(0,12)+" · compatibility directive");
+    setText("intel-tests",d.source_compatibility.tests_passed+"/14 PASS with compatibility copy");
+    const tbody=byId("intel-rows");tbody.replaceChildren();
+    for(let i=0;i<one.rounds.length;i++){
+      const tr=document.createElement("tr");
+      for(const value of [i+1,one.rounds[i].passes,number(one.rounds[i].passes_per_second),multi.rounds[i].passes,number(multi.rounds[i].passes_per_second)]){
+        const td=document.createElement("td");td.textContent=String(value);tr.appendChild(td);
+      }tbody.appendChild(tr);
+    }
+    setText("intel-notes","Developer-reported local evidence, NOT public CI. The original "+d.original_source_commit.slice(0,12)+" Base source did not compile on Odin October until #+feature using-stmt was prepended to two source files; no algorithm changes were reported. Strict unmodified-source verdict: INCONCLUSIVE. Background processes, hybrid CPU scheduling, unequal benchmark duty cycles and unavailable thermal data limit interpretation. Byte-storage results are included in the raw JSON but not mixed with packed-bit medians.");
+  }catch(err){
+    setText("intel-status","No verified local data");
+    setText("intel-notes","Local Base report could not be loaded; CI measurements above remain separate.");
+  }
+}
+loadIntelBase();
 </script>
 </body>
 </html>

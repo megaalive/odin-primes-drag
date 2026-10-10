@@ -25,11 +25,12 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
-              "wheel.html", "wheel210-reported.json",
+              "wheel.html", "wheel210-reported.json", "base-intel12900h.json",
               "wheel210/Dockerfile", "wheel210/README.md",
               "wheel210/main.odin", "wheel210/tests.odin",
               "tools/ci_report.py", "tools/test_ci_report.py",
               "tools/wheel_ci_report.py", "tools/test_wheel_ci_report.py",
+              "tools/test_base_intel_report.py",
               "src/main.odin", "src/tests.odin",
               "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
           }
@@ -57,6 +58,8 @@ jobs:
           PY
       - name: Build pinned Odin compiler and benchmark
         run: docker build --target build -t odin-primes:build .
+      - name: Verify Base compiler release
+        run: test "$(docker run --rm odin-primes:build odin version)" = "odin version dev-2026-10-nightly:84bc3fc"
       - name: Run correctness regression tests
         run: docker run --rm odin-primes:build sh -lc 'odin test .'
       - name: Build runtime image
@@ -174,7 +177,7 @@ jobs:
           path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel210-reported.json site/
+          cp index.html wheel.html wheel210-reported.json base-intel12900h.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

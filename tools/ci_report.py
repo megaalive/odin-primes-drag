@@ -16,7 +16,7 @@ LABELS = {
     "odin_byte_moe": (8, 1),
     "odin_byte_threaded_moe": (8, None),
 }
-COMPILER = "b277d66e008e15d640208f3e11515b047f78be48"
+COMPILER = "84bc3fc2100b0f7880a3af37f71bccdcda41c6f9"
 
 
 def parse(output):
@@ -89,7 +89,10 @@ def main():
               "run_id": run_id, "commit": sha,
               "measured_at_utc": datetime.now(timezone.utc).isoformat(),
               "limit": 1000000, "known_prime_count": 78498,
-              "compiler_commit": COMPILER, "host": host, "lanes": lanes}
+              "compiler_commit": COMPILER,
+              "compiler_version": "dev-2026-10-nightly:84bc3fc",
+              "compiler_archive_sha256": "c3c8b095621fd0c75f7f73e3a0829f1b4d45324225f20ba11ed8dc4da310a8ab",
+              "host": host, "lanes": lanes}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(record, indent=2) + "\n")
     print("CI_RESULT_JSON=" + json.dumps(record, separators=(",", ":")))

@@ -29,6 +29,14 @@ The test suite checks known prime counts, independent reference comparisons, sie
 
 Based on the Odin prime-sieve community work credited to omgitsmoe, Ginger Bill, and Kelimion, and Dave Plummer's original base sieve. The competition and its implementations are maintained in [PlummersSoftwareLLC/Primes](https://github.com/PlummersSoftwareLLC/Primes). See [LICENSE](LICENSE).
 
+## Complementary Odin strategies
+
+**Base** and **Wheel-210** are independent Odin algorithm tracks with a common objective: outperform the fastest non-Odin entries in the [Prime Sieve Drag Race](https://github.com/PlummersSoftwareLLC/Primes). Their internal measurements do not establish a common category winner or a cross-CPU leaderboard. Both have separate CI and correctness checks.
+
+**Base compiler compatibility:** The public Base source includes `#+feature using-stmt` in the two files that use the feature, matching Odin `dev-2026-10`. The public Base Dockerfile now verifies the checksum-pinned October compiler, keeping parity with the Wheel-210 toolchain. The experimental E22 kernel and sieve logic are unchanged; the private historical compiler pin and research baseline are independent.
+
+**Local Intel i9-12900H Base report:** Seven 2026-10-11 measurements by Sol on Windows 11 with Odin `dev-2026-10-nightly:84bc3fc` are published in [`base-intel12900h.json`](base-intel12900h.json), including all packed-bit and byte-storage raw samples and test/provenance caveats. Base packed-bit medians were **9,721.83 passes/s single (1 worker)** and **38,288.42 passes/s parallel (20 workers)**. The original public source at `f3279ab5b930` failed to compile without the file-level feature directive; tests then passed 14/14 with only that compatibility edit. These are explicitly **developer-reported** local data, not independently reproduced CI figures, and they are not official rankings. The [Base Pages dashboard](https://megaalive.github.io/odin-primes-drag/) displays them in a separate section from GitHub runner results.
+
 ## Separate Base and Wheel-210 tracks
 
 The [Base dashboard](https://megaalive.github.io/odin-primes-drag/) and [Wheel-210 dashboard](https://megaalive.github.io/odin-primes-drag/wheel.html) use separate benchmark jobs and compiler pins. Wheel-210 is built with Odin `dev-2026-10`; its implementation and tests are public. Both pages show actual GitHub Actions measurements with runner CPU metadata. The historical i9-12900H report is displayed separately as developer-provided evidence. Neither track claims an official PrimeView ranking, and Wheel-210's `faithful=yes` classification remains subject to upstream review.

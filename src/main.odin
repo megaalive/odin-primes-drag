@@ -1,3 +1,4 @@
+#+feature using-stmt
 // Berdasarkan sieve prima karya Dave Plummer dan komunitas Odin.
 package main
 
