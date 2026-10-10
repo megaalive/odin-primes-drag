@@ -18,6 +18,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Check release file set
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          allowed = {
+              ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
+              ".github/workflows/verify.yml",
+              "src/main.odin", "src/tests.odin",
+              "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
+          }
+          tracked = set(subprocess.check_output(["git", "ls-files"], text=True).splitlines())
+          if tracked != allowed:
+              raise SystemExit(f"Unexpected release file set: {sorted(tracked ^ allowed)}")
+          print("Release file set verified.")
+          PY
       - name: Build pinned Odin compiler and benchmark
         run: docker build --target build -t odin-primes:build .
       - name: Run correctness regression tests
