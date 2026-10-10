@@ -1,0 +1,61 @@
+name: Verify Odin Primes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  correctness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build pinned Odin compiler and benchmark
+        run: docker build --target build -t odin-primes:build .
+      - name: Run correctness regression tests
+        run: docker run --rm odin-primes:build sh -lc 'odin test .'
+      - name: Build runtime image
+        run: docker build -t odin-primes .
+      - name: Smoke test official benchmark output
+        run: |
+          docker run --rm odin-primes > "$RUNNER_TEMP/odin-primes-output.txt"
+          python3 - <<'PY'
+          import math
+          import os
+          from pathlib import Path
+
+          output = Path(os.environ["RUNNER_TEMP"], "odin-primes-output.txt").read_text()
+          labels = {
+              "odin_bit_moe": ("bits=1", 1),
+              "odin_byte_moe": ("bits=8", 1),
+              "odin_bit_threaded_moe": ("bits=1", None),
+              "odin_byte_threaded_moe": ("bits=8", None),
+          }
+          rows = {}
+          for line in output.splitlines():
+              parts = line.strip().split(";")
+              if len(parts) != 5 or parts[0] not in labels:
+                  continue
+              name, passes, seconds, threads, tags = parts
+              expected_bits, expected_threads = labels[name]
+              passes, seconds, threads = int(passes), float(seconds), int(threads)
+              assert name not in rows, f"Duplicate result: {name}"
+              assert passes > 0 and 5 <= seconds < 60 and math.isfinite(seconds)
+              assert threads >= 1 and (expected_threads is None or threads == expected_threads)
+              assert set(tags.split(",")) == {
+                  "algorithm=base", "faithful=yes", expected_bits
+              }, line
+              rows[name] = (passes, seconds, threads)
+          assert set(rows) == set(labels), f"Missing benchmark results: {set(labels) - set(rows)}"
+          print("Four benchmark lanes passed their protocol checks.")
+          for name, (passes, seconds, threads) in rows.items():
+              print(f"{name}: {passes/seconds:.1f} passes/s, workers={threads}")
+          PY
