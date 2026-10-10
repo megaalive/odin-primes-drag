@@ -25,6 +25,7 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
+              "wheel.html", "wheel210.json",
               "tools/ci_report.py", "tools/test_ci_report.py",
               "src/main.odin", "src/tests.odin",
               "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
@@ -36,6 +37,21 @@ jobs:
           PY
       - name: Validate CI report parser
         run: python3 -m unittest discover -s tools -p 'test_*.py' -v
+      - name: Validate separate reported wheel track
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('wheel210.json').read_text())
+          assert d['schema_version']==1 and d['status']=='reported'
+          assert d['track']=='wheel-210' and d['limit']==1000000
+          assert d['compiler'].startswith('Odin dev-2026-10')
+          assert len(d['lanes'])==2
+          assert {x['mode'] for x in d['lanes']}=={'single','multi'}
+          assert all(x['passes']>0 and x['seconds']>=5 for x in d['lanes'])
+          assert 'independent' in d['evidence']
+          print('Wheel track is correctly labeled as reported, not CI-verified.')
+          PY
       - name: Build pinned Odin compiler and benchmark
         run: docker build --target build -t odin-primes:build .
       - name: Run correctness regression tests
@@ -113,7 +129,7 @@ jobs:
           path: site
       - name: Assemble static site
         run: |
-          cp index.html site/index.html
+          cp index.html wheel.html wheel210.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

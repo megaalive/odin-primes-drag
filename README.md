@@ -28,3 +28,7 @@ The test suite checks known prime counts, independent reference comparisons, sie
 ## Attribution
 
 Based on the Odin prime-sieve community work credited to omgitsmoe, Ginger Bill, and Kelimion, and Dave Plummer's original base sieve. The competition and its implementations are maintained in [PlummersSoftwareLLC/Primes](https://github.com/PlummersSoftwareLLC/Primes). See [LICENSE](LICENSE).
+
+## Separate Wheel-210 track
+
+[Wheel-210 research page](https://megaalive.github.io/odin-primes-drag/wheel.html) displays developer-reported October 2026 laptop measurements separately from the verified Base track. The wheel candidate uses Odin `dev-2026-10` and is being prepared privately for eventual upstream review. The public page deliberately does not publish its source, claim same-hardware competitor victories, or present the reported values as official PrimeView results. The `faithful=yes` classification is proposed pending maintainer review.

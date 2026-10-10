@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Odin Primes Wheel-210 research track, with clearly labeled user-reported benchmark results.">
+<title>Wheel-210 · Odin Primes</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
+a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #8de0ff;outline-offset:4px}
+.wrapper{max-width:1080px;margin:auto;padding:32px 24px 76px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid #253345;padding-bottom:24px}
+.wordmark{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.04em}
+.symbol{display:grid;place-items:center;border-radius:12px;width:42px;height:42px;background:#162d43;color:#79d5fc;border:1px solid #315272}
+.topnav{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
+h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
+.intro{max-width:730px;color:#aab9c9;font-size:16px;line-height:1.65;margin:0}
+.status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:22px 0 0;color:#9bb0c4;font-size:13px}
+.dot{width:8px;height:8px;background:#ffbf69;border-radius:50%;flex:none}
+.section-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:48px 0 15px}
+h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#90a7bc}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card,.panel{border:1px solid #293b4e;background:#111d2b;border-radius:14px}
+.card{padding:23px 22px;min-width:0}.card .label{font-size:12px;color:#a4bad0;font-weight:650}
+.card .value{font-size:clamp(23px,3vw,37px);font-weight:720;letter-spacing:-.04em;line-height:1.2;margin:15px 0 8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .unit{font-size:12px;color:#89a5bb}.panel{padding:23px 22px}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 30px}
+.key{font-size:11px;color:#90a9c0;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}
+.datum{font-size:14px;color:#ebf1fa;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}.table{border-collapse:collapse;width:100%;min-width:530px;font-variant-numeric:tabular-nums}
+.table th{text-align:left;font-weight:650;font-size:12px;color:#97adc1;border-bottom:1px solid #304257;padding:13px 12px;white-space:nowrap}
+.table td{font-size:14px;padding:16px 12px;border-bottom:1px solid #223246}.table tbody tr:last-child td{border:0}.table th:not(:first-child),.table td:not(:first-child){text-align:right}
+.fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:900px}
+footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
+@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}.topnav{gap:14px}}
+</style>
+</head>
+<body>
+<main class="wrapper">
+<header class="top">
+<div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Tracks and links">
+<a href="./">Base</a><a href="./wheel.html" aria-current="page">Wheel-210</a>
+<a href="https://github.com/megaalive/odin-primes-drag">Repository</a>
+<a href="https://github.com/PlummersSoftwareLLC/Primes">Competition</a>
+</nav>
+</header>
+<p class="eyebrow">WHEEL TRACK · RESEARCH REPORT</p>
+<h1>Wheel-210. <span>Challenging.</span></h1>
+<p class="intro">An independent Odin wheel-sieve candidate. This page records a developer-reported laptop run, not a verified GitHub Actions benchmark or official PrimeView placement. The <a href="./">Base track</a> maintains its own separate hardware and CI evidence.</p>
+<div class="status" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="status-label">Loading source-reported measurements…</span></div>
+<section aria-labelledby="summary-title">
+<div class="section-header"><h2 id="summary-title">Reported laptop measurements</h2><span class="small">Five-second runs · limit 1,000,000</span></div>
+<div class="cards">
+<div class="card"><div class="label">Wheel-210 · 1 worker</div><div class="value" id="single">—</div><div class="unit">complete sieves / second · reported</div></div>
+<div class="card"><div class="label">Wheel-210 · parallel</div><div class="value" id="multi">—</div><div class="unit">complete sieves / second · reported</div></div>
+<div class="card"><div class="label">Reported benchmark CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit" id="cpu-threads">Device information pending</div></div>
+</div>
+</section>
+<section aria-labelledby="evidence-title">
+<div class="section-header"><h2 id="evidence-title">Run provenance</h2><span class="small">Reported values, not independently reproduced</span></div>
+<div class="panel"><div class="meta">
+<div><div class="key">CPU model</div><div class="datum" id="cpu">—</div></div>
+<div><div class="key">Odin compiler</div><div class="datum" id="compiler">—</div></div>
+<div><div class="key">Build options</div><div class="datum" id="flags">—</div></div>
+<div><div class="key">Algorithm tags</div><div class="datum" id="tags">—</div></div>
+<div><div class="key">Source / verification</div><div class="datum" id="provenance">—</div></div>
+<div><div class="key">Reported date</div><div class="datum" id="date">—</div></div>
+</div></div>
+</section>
+<section aria-labelledby="lanes-title">
+<div class="section-header"><h2 id="lanes-title">Raw reported lanes</h2><span class="small">No cross-hardware competitor ratios</span></div>
+<div class="panel tablewrap"><table class="table">
+<thead><tr><th scope="col">Mode</th><th scope="col">Workers</th><th scope="col">Passes</th><th scope="col">Seconds</th><th scope="col">Passes/s</th></tr></thead>
+<tbody id="lanes"><tr><td colspan="5">Loading data…</td></tr></tbody>
+</table></div>
+</section>
+<section aria-labelledby="notes-title">
+<div class="section-header"><h2 id="notes-title">Evidence and submission readiness</h2></div>
+<p class="fineprint">Wheel-210 is evaluated as a separate algorithm category, <code>algorithm=wheel</code>, with a proposed <code>faithful=yes,bits=1</code> classification pending upstream review. The implementation is being independently packaged and checked before any submission. The reported CPU, compiler version and throughput have not been reproduced in the public CI; the private source is not published here. Competing implementations measured on other CPU models cannot establish wins or a common leaderboard ranking. The official competition requires a reproducible Dockerfile, documented source, correct sieve output and a pull request against <code>drag-race</code>.</p>
+</section>
+<footer>Separate tracks: <a href="./">Base CI results</a> · <a href="https://github.com/PlummersSoftwareLLC/Primes">Upstream rules and competition</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView</a>. Reported measurements should not be mistaken for official rankings.</footer>
+</main>
+<script>
+"use strict";
+const el=id=>document.getElementById(id);
+const num=(v,d=1)=>Number(v).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const set=(id,v)=>{el(id).textContent=v==null?"—":String(v)};
+async function load(){
+  try{
+    const response=await fetch("./wheel210.json",{cache:"no-store"});
+    if(!response.ok)throw Error("Data not available");
+    const d=await response.json();
+    if(d.schema_version!==1||d.status!=="reported"||!Array.isArray(d.lanes)||d.lanes.length!==2)throw Error("Unrecognized research data");
+    const a=d.lanes.find(x=>x.mode==="single"),b=d.lanes.find(x=>x.mode==="multi");
+    if(!a||!b||a.workers!==1)throw Error("Incomplete data");
+    for(const lane of [a,b])if(!(lane.passes>0&&lane.seconds>=5&&lane.workers>=1))throw Error("Invalid reported lane");
+    set("single",num(a.passes/a.seconds));set("multi",num(b.passes/b.seconds));
+    set("cpu-short",d.host.cpu_model);set("cpu-threads",d.host.thread_description);
+    set("cpu",d.host.cpu_model);set("compiler",d.compiler);
+    set("flags",d.build_flags);set("tags",d.classification);
+    set("provenance",d.evidence);set("date",d.reported_date);
+    const body=el("lanes");body.replaceChildren();
+    for(const item of d.lanes){
+      const row=document.createElement("tr");
+      for(const val of [item.mode,item.workers,item.passes,num(item.seconds,4),num(item.passes/item.seconds)]){
+        const td=document.createElement("td");td.textContent=String(val);row.appendChild(td);
+      }
+      body.appendChild(row);
+    }
+    set("status-label","Developer-reported data · independent verification pending");
+  }catch(error){
+    set("status-label","Reported data unavailable; no verified wheel benchmark published");
+    el("lanes").replaceChildren();
+  }
+}
+load();
+</script>
+</body>
+</html>

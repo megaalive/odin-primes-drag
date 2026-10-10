@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "reported",
+  "track": "wheel-210",
+  "reported_date": "2026-10-11",
+  "classification": "algorithm=wheel,faithful=yes,bits=1 (proposed)",
+  "compiler": "Odin dev-2026-10 (reported; exact build SHA unverified)",
+  "build_flags": "-o:speed -no-bounds-check -microarch:native",
+  "host": {
+    "cpu_model": "Intel Core i9-12900H",
+    "thread_description": "14 cores / 20 hardware threads; 20 benchmark workers reported"
+  },
+  "evidence": "Developer-provided benchmark output; public CI reproduction and same-host competitor comparison pending",
+  "limit": 1000000,
+  "lanes": [
+    {
+      "mode": "single",
+      "workers": 1,
+      "passes": 94567,
+      "seconds": 5.0000268
+    },
+    {
+      "mode": "multi",
+      "workers": 20,
+      "passes": 322499,
+      "seconds": 5.0050487
+    }
+  ]
+}
