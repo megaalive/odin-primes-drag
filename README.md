@@ -29,10 +29,10 @@ The test suite checks known prime counts, independent reference comparisons, sie
 
 Based on the Odin prime-sieve community work credited to omgitsmoe, Ginger Bill, and Kelimion, and Dave Plummer's original base sieve. The competition and its implementations are maintained in [PlummersSoftwareLLC/Primes](https://github.com/PlummersSoftwareLLC/Primes). See [LICENSE](LICENSE).
 
-## Separate Wheel-210 track
+## Separate Base and Wheel-210 tracks
 
-[Wheel-210 research page](https://megaalive.github.io/odin-primes-drag/wheel.html) displays developer-reported October 2026 laptop measurements separately from the verified Base track. The wheel candidate uses Odin `dev-2026-10` and is being prepared privately for eventual upstream review. The public page deliberately does not publish its source, claim same-hardware competitor victories, or present the reported values as official PrimeView results. The `faithful=yes` classification is proposed pending maintainer review.
+The [Base dashboard](https://megaalive.github.io/odin-primes-drag/) and [Wheel-210 dashboard](https://megaalive.github.io/odin-primes-drag/wheel.html) use separate benchmark jobs and compiler pins. Wheel-210 is built with Odin `dev-2026-10`; its implementation and tests are public. Both pages show actual GitHub Actions measurements with runner CPU metadata. The historical i9-12900H report is displayed separately as developer-provided evidence. Neither track claims an official PrimeView ranking, and Wheel-210's `faithful=yes` classification remains subject to upstream review.
 
-## Wheel-210 — public source and CI
+## Wheel-210 files and validation
 
 Wheel-210 lives in [`wheel210/`](wheel210/) alongside the Base implementation. Its [source](wheel210/main.odin), [oracle tests](wheel210/tests.odin), [Dockerfile](wheel210/Dockerfile), and [build notes](wheel210/README.md) are public. The GitHub Actions workflow separately builds, checks and benchmarks both algorithms, then publishes Pages only when both pass. The [Wheel dashboard](https://megaalive.github.io/odin-primes-drag/wheel.html) shows actual CI runner throughput, CPU metadata and compiler provenance. Historical laptop numbers remain explicitly developer-reported, not comparable to results from different CPUs or official PrimeView.
