@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Odin Primes: reproducible CI benchmark results with actual GitHub runner CPU metadata.">
+<title>Odin Primes · CI Results</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
+a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #8de0ff;outline-offset:4px}
+.wrapper{max-width:1080px;margin:auto;padding:32px 24px 76px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid #253345;padding-bottom:24px}
+.wordmark{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.04em}
+.symbol{display:grid;place-items:center;border-radius:12px;width:42px;height:42px;background:#162d43;color:#79d5fc;border:1px solid #315272}
+.topnav{display:flex;gap:22px;font-size:14px}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
+h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
+.intro{max-width:690px;color:#aab9c9;font-size:16px;line-height:1.65;margin:0}
+.status{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px;color:#9bb0c4;font-size:13px}
+.dot{width:8px;height:8px;background:#64748b;border-radius:50%}.dot.ok{background:#60dba7}.dot.unavailable{background:#ffbf69}
+.section-header{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin:48px 0 15px}
+h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#90a7bc}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card,.panel{border:1px solid #293b4e;background:#111d2b;border-radius:14px}
+.card{padding:23px 22px;min-width:0}.card .label{font-size:12px;color:#a4bad0;font-weight:650}.card .value{font-size:clamp(23px,3vw,37px);font-weight:720;letter-spacing:-.04em;line-height:1.2;margin:15px 0 8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.card .unit{font-size:12px;color:#89a5bb}
+.panel{padding:23px 22px}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 30px}
+.key{font-size:11px;color:#90a9c0;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}.datum{font-size:14px;color:#ebf1fa;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}.table{border-collapse:collapse;width:100%;min-width:630px;font-variant-numeric:tabular-nums}
+.table th{text-align:left;font-weight:650;font-size:12px;color:#97adc1;border-bottom:1px solid #304257;padding:13px 12px;white-space:nowrap}
+.table td{font-size:14px;padding:16px 12px;border-bottom:1px solid #223246}.table tbody tr:last-child td{border:0}.table th:not(:first-child),.table td:not(:first-child){text-align:right}
+.lane{font-weight:650;color:#f1f7fc}.muted{color:#90a6bc}.fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:850px}
+footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
+@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}.topnav{gap:14px}}
+@media(prefers-reduced-motion:no-preference){a{transition:color .18s}}
+</style>
+</head>
+<body>
+<main class="wrapper">
+<header class="top">
+<div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Links"><a href="https://github.com/megaalive/odin-primes-drag">Source</a><a href="https://github.com/megaalive/odin-primes-drag/actions">CI runs</a><a href="https://github.com/PlummersSoftwareLLC/Primes">Competition</a></nav>
+</header>
+<p class="eyebrow">CI PERFORMANCE REPORT</p>
+<h1>Prime sieve. <span>Measured.</span></h1>
+<p class="intro">A compact view of the selected Odin prime-sieve implementation, measured on a GitHub-hosted runner. Actual CPU details are shown alongside each run. These measurements are screening results, <strong>not official PrimeView rankings</strong>.</p>
+<div class="status" role="status" aria-live="polite"><span id="status-dot" class="dot"></span><span id="status-label">Loading published evidence…</span> <a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
+<section aria-labelledby="summary-title">
+<div class="section-header"><h2 id="summary-title">Latest verified run</h2><span class="small" id="observed">No measured results published yet</span></div>
+<div class="cards">
+<div class="card"><div class="label">Packed bits · 1 worker</div><div class="value" id="single">—</div><div class="unit">complete sieves / second</div></div>
+<div class="card"><div class="label">Packed bits · parallel</div><div class="value" id="multi">—</div><div class="unit">complete sieves / second</div></div>
+<div class="card"><div class="label">GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit" id="cpu-threads">CPU model not recorded</div></div>
+</div>
+</section>
+<section aria-labelledby="host-title">
+<div class="section-header"><h2 id="host-title">Hardware &amp; build evidence</h2><span class="small">Captured on the executing CI runner</span></div>
+<div class="panel"><div class="meta">
+<div><div class="key">CPU model</div><div class="datum" id="cpu-model">—</div></div>
+<div><div class="key">Logical CPUs / affinity</div><div class="datum" id="affinity">—</div></div>
+<div><div class="key">Architecture / runner</div><div class="datum" id="platform">—</div></div>
+<div><div class="key">Kernel / virtualization</div><div class="datum" id="kernel">—</div></div>
+<div><div class="key">Commit tested</div><div class="datum" id="commit">—</div></div>
+<div><div class="key">Compiler source pin</div><div class="datum" id="compiler">—</div></div>
+</div></div>
+</section>
+<section aria-labelledby="lanes-title">
+<div class="section-header"><h2 id="lanes-title">Measured lanes</h2><span class="small">Limit: 1,000,000 · five-second timed tests</span></div>
+<div class="panel tablewrap"><table class="table">
+<thead><tr><th scope="col">Implementation</th><th scope="col">Workers</th><th scope="col">Bits</th><th scope="col">Passes</th><th scope="col">Seconds</th><th scope="col">Passes/s</th></tr></thead>
+<tbody id="lanes"><tr><td colspan="6" class="muted" style="text-align:left">Measurements not yet available.</td></tr></tbody>
+</table></div>
+</section>
+<section aria-labelledby="notes-title">
+<div class="section-header"><h2 id="notes-title">Reading these results</h2></div>
+<p class="fineprint">Each lane is timed independently; <strong>passes/s = completed sieve passes ÷ elapsed seconds</strong>. The packed-bit paths use the competition's <code>algorithm=base, faithful=yes, bits=1</code> protocol; the separate byte-storage paths use <code>bits=8</code>. The program verifies the known prime count (78,498 at one million) outside the measurement window. GitHub-hosted runners can change CPU type and available resources between jobs; compare competitors only when tested on the same runner under a controlled protocol. No cross-CPU aggregate or inferred speedup is shown.</p>
+</section>
+<footer>Source and raw evidence: <a href="https://github.com/megaalive/odin-primes-drag">GitHub repository</a>. Benchmark reporting is informational and independent of the official <a href="https://plummerssoftwarellc.github.io/PrimeView/">PrimeView</a> leaderboard.</footer>
+</main>
+<script>
+"use strict";
+const byId = id => document.getElementById(id);
+const number = (v,decimals=1) => Number(v).toLocaleString("en-US",{maximumFractionDigits:decimals,minimumFractionDigits:decimals});
+const setText=(id,v)=>{byId(id).textContent=(v===null||v===undefined||v==="")?"—":String(v)};
+async function load(){
+ try {
+  const response=await fetch("./results.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("Published data unavailable");
+  const data=await response.json();
+  if(data.status!=="passed" || !Array.isArray(data.lanes) || data.lanes.length!==4)throw new Error("No validated benchmark run published");
+  const lane=name=>data.lanes.find(x=>x.label===name);
+  const single=lane("odin_bit_moe"),multi=lane("odin_bit_threaded_moe");
+  if(!single||!multi)throw new Error("Incomplete packed-bit evidence");
+  setText("single",number(single.passes_per_second));
+  setText("multi",number(multi.passes_per_second));
+  setText("cpu-short",data.host.cpu_model);
+  setText("cpu-threads",String(data.host.logical_cpus)+" logical CPU(s)");
+  setText("cpu-model",data.host.cpu_model);
+  setText("affinity",String(data.host.logical_cpus)+" / "+String(data.host.affinity_cpus));
+  setText("platform",data.host.machine+" / "+data.host.runner_image);
+  setText("kernel",data.host.kernel+" / "+(data.host.virtualization||"Unknown"));
+  setText("commit",data.commit.slice(0,12));
+  setText("compiler",data.compiler_commit.slice(0,12));
+  const time=new Date(data.measured_at_utc);
+  setText("observed",isNaN(time.getTime())?data.measured_at_utc:time.toLocaleString());
+  const link="https://github.com/megaalive/odin-primes-drag/actions/runs/"+encodeURIComponent(data.run_id);
+  byId("run-link").href=link;
+  byId("status-dot").className="dot ok";
+  setText("status-label","Verified GitHub Actions measurement");
+  const body=byId("lanes");body.replaceChildren();
+  const titles={"odin_bit_moe":"Packed-bit · single","odin_bit_threaded_moe":"Packed-bit · parallel","odin_byte_moe":"Byte · single","odin_byte_threaded_moe":"Byte · parallel"};
+  for(const item of data.lanes){
+   const tr=document.createElement("tr");
+   for(const [n,v] of [[0,titles[item.label]||item.label],[1,item.workers],[2,item.bits],[3,item.passes],[4,number(item.seconds,3)],[5,number(item.passes_per_second)]]) {
+    const td=document.createElement("td");td.textContent=String(v);if(n===0)td.className="lane";tr.appendChild(td);
+   }
+   body.appendChild(tr);
+  }
+ }catch(error){
+  byId("status-dot").className="dot unavailable";
+  setText("status-label","No verified measurement is published");
+  setText("observed","Check GitHub Actions for current results");
+ }
+}
+load();
+</script>
+</body>
+</html>

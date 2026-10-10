@@ -24,7 +24,8 @@ jobs:
           import subprocess
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
-              ".github/workflows/verify.yml",
+              ".github/workflows/verify.yml", "index.html", "results.json",
+              "tools/ci_report.py", "tools/test_ci_report.py",
               "src/main.odin", "src/tests.odin",
               "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
           }
@@ -33,6 +34,8 @@ jobs:
               raise SystemExit(f"Unexpected release file set: {sorted(tracked ^ allowed)}")
           print("Release file set verified.")
           PY
+      - name: Validate CI report parser
+        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
       - name: Build pinned Odin compiler and benchmark
         run: docker build --target build -t odin-primes:build .
       - name: Run correctness regression tests
@@ -74,3 +77,50 @@ jobs:
           for name, (passes, seconds, threads) in rows.items():
               print(f"{name}: {passes/seconds:.1f} passes/s, workers={threads}")
           PY
+      - name: Generate Pages evidence
+        run: |
+          mkdir -p "$RUNNER_TEMP/odin-pages"
+          cp index.html "$RUNNER_TEMP/odin-pages/index.html"
+          touch "$RUNNER_TEMP/odin-pages/.nojekyll"
+          python3 tools/ci_report.py --input "$RUNNER_TEMP/odin-primes-output.txt" --output "$RUNNER_TEMP/odin-pages/results.json"
+      - name: Preserve public CI measurement artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: odin-ci-results-${{ github.run_id }}
+          path: ${{ runner.temp }}/odin-pages/results.json
+          retention-days: 90
+          if-no-files-found: error
+
+  pages:
+    if: github.event_name != 'pull_request'
+    needs: correctness
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download verified site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: odin-ci-results-${{ github.run_id }}
+          path: site
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Assemble static site
+        run: |
+          cp index.html site/index.html
+          touch site/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+      - name: Publish GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
