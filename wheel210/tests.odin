@@ -75,3 +75,21 @@ wheel210_large_range_reference_counts :: proc(t: ^testing.T) {
         delete(pk.words)
     }
 }
+
+// E49-W1 regression: never mark below the factor's square.
+@test
+wheel210_e49_square_bounded_strikes :: proc(t: ^testing.T) {
+    init_tables()
+    for i in 0 ..< large_count {
+        st := &large_list[i]
+        p := st.step
+        for r, ri in residues {
+            b := st.starts[ri]
+            n := b * WHEEL + r
+            testing.expect(t, b >= 0)
+            testing.expect(t, n >= p * p)
+            testing.expect(t, n % p == 0)
+            testing.expect(t, n - p * WHEEL < p * p)
+        }
+    }
+}

@@ -67,6 +67,19 @@ first_block :: proc(p, residue: int) -> int {
 	return (neg * inv) % p
 }
 
+// Start at the first eligible multiple at or beyond p*p. For each residue,
+// valid blocks form an arithmetic progression with stride p; rounding the
+// initial congruence solution forward avoids marks already handled by smaller
+// factors. This table is built outside the timed region.
+first_strike_at_square :: proc(p, residue: int) -> int {
+    start := first_block(p, residue)
+    minimum := (p * p - residue + WHEEL - 1) / WHEEL
+    if start < minimum {
+        start += ((minimum - start + p - 1) / p) * p
+    }
+    return start
+}
+
 // One-time wheel tables (primes, residues, dense masks). This is algorithm
 // definition, not sieve state: the 1M buffer is still built fresh per pass.
 init_tables :: proc() {
@@ -103,7 +116,7 @@ init_tables :: proc() {
 		if i > PAT_CUTOFF {
 			st := Strike{step = i}
 			for r, ri in residues {
-				st.starts[ri] = first_block(i, r)
+				st.starts[ri] = first_strike_at_square(i, r)
 			}
 			large_list[large_count] = st
 			large_count += 1
