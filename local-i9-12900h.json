@@ -1,0 +1,457 @@
+{
+  "schema": "odin.local-i9/1",
+  "source": "local-machine",
+  "date": "2026-10-11",
+  "host": {
+    "cpu": "Intel Core i9-12900H",
+    "cores": 14,
+    "logical_processors": 20,
+    "os": "Windows 11",
+    "power": "AC"
+  },
+  "compiler": {
+    "version": "Odin dev-2026-10-nightly:84bc3fc",
+    "backend": "LLVM 20.1.0",
+    "flags": [
+      "-o:speed",
+      "-microarch:native",
+      "-no-bounds-check",
+      "-disable-assert"
+    ]
+  },
+  "provenance": {
+    "git_commit": "af227f9fbe9278ec02b16f0ddbc38febd432abab",
+    "kernels_unchanged": true,
+    "raw_json_sha256": "406eb2c9768e6975a4dd37c219ccef30c51acdec168ef94ecf0faa72ebedd2d5",
+    "source_sha256": {
+      "base": "fa701f195499a002cea56ab07792562ec492bfe83f52104f8863b1cfec92c998",
+      "wheel30": "75cfe0048f6300d6cf740ce1f6576ea9d38dc4e26965b27d17b90fb7df397d34",
+      "wheel210": "1f7648c57b22e8dd6385b59357371ca7347c0a1ea16084b8a832f4f7e50a3827"
+    }
+  },
+  "correctness": {
+    "primes_at_one_million": 78498,
+    "oracle": "PASS",
+    "worker_stress": "PASS; 3 groups per algorithm",
+    "race_detector": "not run"
+  },
+  "measurements": {
+    "single": {
+      "phase": "confirmation",
+      "workers": 1,
+      "blocks": 6,
+      "limit": 1000000,
+      "seconds_per_run": 5,
+      "tracks": {
+        "base": {
+          "n": 6,
+          "median": 12075.9971,
+          "cv": 0.7333
+        },
+        "wheel30": {
+          "n": 6,
+          "median": 27417.6,
+          "cv": 0.7508
+        },
+        "wheel210": {
+          "n": 6,
+          "median": 24108.0405,
+          "cv": 1.5365
+        }
+      },
+      "pairs": {
+        "wheel30/wheel210": {
+          "median_ratio": 1.132153,
+          "wins": 6,
+          "blocks": 6
+        },
+        "wheel30/base": {
+          "median_ratio": 2.262242,
+          "wins": 6,
+          "blocks": 6
+        },
+        "wheel210/base": {
+          "median_ratio": 2.000131,
+          "wins": 6,
+          "blocks": 6
+        }
+      },
+      "samples": [
+        {
+          "block": 1,
+          "order": [
+            "wheel210",
+            "base",
+            "wheel30"
+          ],
+          "values": {
+            "wheel210": {
+              "passes": 120429,
+              "seconds": 5.0000226,
+              "passes_per_second": 24085.69113
+            },
+            "base": {
+              "passes": 60999,
+              "seconds": 5.000029,
+              "passes_per_second": 12199.72924
+            },
+            "wheel30": {
+              "passes": 135551,
+              "seconds": 5,
+              "passes_per_second": 27110.2
+            }
+          }
+        },
+        {
+          "block": 2,
+          "order": [
+            "wheel30",
+            "wheel210",
+            "base"
+          ],
+          "values": {
+            "wheel30": {
+              "passes": 137702,
+              "seconds": 5,
+              "passes_per_second": 27540.4
+            },
+            "wheel210": {
+              "passes": 119757,
+              "seconds": 5.0000352,
+              "passes_per_second": 23951.23138
+            },
+            "base": {
+              "passes": 59775,
+              "seconds": 5.0000552,
+              "passes_per_second": 11954.86802
+            }
+          }
+        },
+        {
+          "block": 3,
+          "order": [
+            "wheel210",
+            "wheel30",
+            "base"
+          ],
+          "values": {
+            "wheel210": {
+              "passes": 124835,
+              "seconds": 5.0000243,
+              "passes_per_second": 24966.87866
+            },
+            "wheel30": {
+              "passes": 136790,
+              "seconds": 5,
+              "passes_per_second": 27358
+            },
+            "base": {
+              "passes": 60462,
+              "seconds": 5.0000109,
+              "passes_per_second": 12092.37364
+            }
+          }
+        },
+        {
+          "block": 4,
+          "order": [
+            "wheel30",
+            "base",
+            "wheel210"
+          ],
+          "values": {
+            "wheel30": {
+              "passes": 137386,
+              "seconds": 5,
+              "passes_per_second": 27477.2
+            },
+            "base": {
+              "passes": 60299,
+              "seconds": 5.0000744,
+              "passes_per_second": 12059.62055
+            },
+            "wheel210": {
+              "passes": 120652,
+              "seconds": 5.0000021,
+              "passes_per_second": 24130.38987
+            }
+          }
+        },
+        {
+          "block": 5,
+          "order": [
+            "base",
+            "wheel210",
+            "wheel30"
+          ],
+          "values": {
+            "base": {
+              "passes": 60125,
+              "seconds": 5.0000354,
+              "passes_per_second": 12024.91486
+            },
+            "wheel210": {
+              "passes": 120210,
+              "seconds": 5.0000274,
+              "passes_per_second": 24041.86825
+            },
+            "wheel30": {
+              "passes": 135337,
+              "seconds": 5,
+              "passes_per_second": 27067.4
+            }
+          }
+        },
+        {
+          "block": 6,
+          "order": [
+            "base",
+            "wheel30",
+            "wheel210"
+          ],
+          "values": {
+            "base": {
+              "passes": 60776,
+              "seconds": 5.0000112,
+              "passes_per_second": 12155.17277
+            },
+            "wheel30": {
+              "passes": 137479,
+              "seconds": 5,
+              "passes_per_second": 27495.8
+            },
+            "wheel210": {
+              "passes": 120759,
+              "seconds": 5.0000221,
+              "passes_per_second": 24151.69325
+            }
+          }
+        }
+      ]
+    },
+    "multi": {
+      "phase": "shared",
+      "workers": 20,
+      "blocks": 7,
+      "limit": 1000000,
+      "seconds_per_run": 5,
+      "tracks": {
+        "base": {
+          "n": 7,
+          "median": 48063.9297,
+          "cv": 2.0235
+        },
+        "wheel30": {
+          "n": 7,
+          "median": 125314.6199,
+          "cv": 1.7685
+        },
+        "wheel210": {
+          "n": 7,
+          "median": 85884.8717,
+          "cv": 2.1913
+        }
+      },
+      "pairs": {
+        "wheel30/wheel210": {
+          "median_ratio": 1.465415,
+          "wins": 7,
+          "blocks": 7
+        },
+        "wheel30/base": {
+          "median_ratio": 2.580805,
+          "wins": 7,
+          "blocks": 7
+        },
+        "wheel210/base": {
+          "median_ratio": 1.786055,
+          "wins": 7,
+          "blocks": 7
+        }
+      },
+      "samples": [
+        {
+          "block": 1,
+          "order": [
+            "base",
+            "wheel30",
+            "wheel210"
+          ],
+          "values": {
+            "base": {
+              "passes": 244189,
+              "seconds": 5.0007828,
+              "passes_per_second": 48830.15515
+            },
+            "wheel30": {
+              "passes": 626648,
+              "seconds": 5.0005977,
+              "passes_per_second": 125314.61989
+            },
+            "wheel210": {
+              "passes": 424120,
+              "seconds": 5.0006439,
+              "passes_per_second": 84813.07777
+            }
+          }
+        },
+        {
+          "block": 2,
+          "order": [
+            "wheel30",
+            "wheel210",
+            "base"
+          ],
+          "values": {
+            "wheel30": {
+              "passes": 643194,
+              "seconds": 5.0006073,
+              "passes_per_second": 128623.17743
+            },
+            "wheel210": {
+              "passes": 429474,
+              "seconds": 5.000578,
+              "passes_per_second": 85884.87171
+            },
+            "base": {
+              "passes": 239776,
+              "seconds": 5.0009229,
+              "passes_per_second": 47946.35006
+            }
+          }
+        },
+        {
+          "block": 3,
+          "order": [
+            "wheel210",
+            "base",
+            "wheel30"
+          ],
+          "values": {
+            "wheel210": {
+              "passes": 436194,
+              "seconds": 5.0006067,
+              "passes_per_second": 87228.21573
+            },
+            "base": {
+              "passes": 240353,
+              "seconds": 5.0006939,
+              "passes_per_second": 48063.92969
+            },
+            "wheel30": {
+              "passes": 620299,
+              "seconds": 5.0006512,
+              "passes_per_second": 124043.64456
+            }
+          }
+        },
+        {
+          "block": 4,
+          "order": [
+            "base",
+            "wheel210",
+            "wheel30"
+          ],
+          "values": {
+            "base": {
+              "passes": 246055,
+              "seconds": 5.0006832,
+              "passes_per_second": 49204.27673
+            },
+            "wheel210": {
+              "passes": 431454,
+              "seconds": 5.0006523,
+              "passes_per_second": 86279.54397
+            },
+            "wheel30": {
+              "passes": 613949,
+              "seconds": 5.0007129,
+              "passes_per_second": 122772.29513
+            }
+          }
+        },
+        {
+          "block": 5,
+          "order": [
+            "wheel210",
+            "wheel30",
+            "base"
+          ],
+          "values": {
+            "wheel210": {
+              "passes": 440195,
+              "seconds": 5.0006401,
+              "passes_per_second": 88027.73069
+            },
+            "wheel30": {
+              "passes": 626998,
+              "seconds": 5.0008044,
+              "passes_per_second": 125379.42896
+            },
+            "base": {
+              "passes": 239206,
+              "seconds": 5.0008187,
+              "passes_per_second": 47833.36776
+            }
+          }
+        },
+        {
+          "block": 6,
+          "order": [
+            "wheel30",
+            "base",
+            "wheel210"
+          ],
+          "values": {
+            "wheel30": {
+              "passes": 639699,
+              "seconds": 5.0007606,
+              "passes_per_second": 127920.34076
+            },
+            "base": {
+              "passes": 231060,
+              "seconds": 5.0007124,
+              "passes_per_second": 46205.41665
+            },
+            "wheel210": {
+              "passes": 412680,
+              "seconds": 5.0006416,
+              "passes_per_second": 82525.41034
+            }
+          }
+        },
+        {
+          "block": 7,
+          "order": [
+            "base",
+            "wheel30",
+            "wheel210"
+          ],
+          "values": {
+            "base": {
+              "passes": 243018,
+              "seconds": 5.0008841,
+              "passes_per_second": 48595.00743
+            },
+            "wheel30": {
+              "passes": 617063,
+              "seconds": 5.0006138,
+              "passes_per_second": 123397.45173
+            },
+            "wheel210": {
+              "passes": 421090,
+              "seconds": 5.0006848,
+              "passes_per_second": 84206.46708
+            }
+          }
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Single-thread confirmation uses 6 blocks; 20-thread shared-wall-clock uses 7 independent paired blocks; do not divide modes to infer scaling efficiency.",
+    "Wheel-30 twenty-thread mode was implemented as a separate research runner. Its published competition entry and public CI continue to run single-thread.",
+    "No direct temperature, package power, effective P-core clock or throttling readings were available.",
+    "This is not an official PrimeView ranking and does not include non-Odin challengers."
+  ]
+}

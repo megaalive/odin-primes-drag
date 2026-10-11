@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark"><title>Local machine · Odin Primes</title>
+<meta name="description" content="Intel i9-12900H comparison of Base, Wheel-30 and Wheel-210: one and twenty threads.">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
+a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #8de0ff;outline-offset:4px}
+.wrapper{max-width:1080px;margin:auto;padding:32px 24px 76px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid #253345;padding-bottom:24px}
+.wordmark{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.04em}
+.symbol{display:grid;place-items:center;border-radius:12px;width:42px;height:42px;background:#162d43;color:#79d5fc;border:1px solid #315272}
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px}
+.tracknav{display:flex;gap:8px;flex-wrap:wrap}
+.track{display:flex;align-items:stretch;min-width:0;white-space:nowrap;border:1px solid #30465e;border-radius:10px;overflow:hidden;background:#111e2d}
+.track.is-active{border-color:#528db8;background:#18334c}
+.track a{display:inline-flex;align-items:center;min-height:38px;text-decoration:none}
+.track-page{padding:0 13px;font-weight:700;color:#e6f2ff}
+.track-source{padding:0 11px;border-left:1px solid #30465e;color:#99c4e2;font-size:12px}
+.track a:hover{background:#294b66;color:#fff}
+.track-source:focus-visible,.track-page:focus-visible{outline-offset:-3px}
+.nav-competition{color:#9fbdd4;white-space:nowrap;padding:8px 2px}
+@media(max-width:720px){.topnav{width:100%;gap:8px}.tracknav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:8px}.track-page{flex:1;justify-content:center}.nav-competition{padding:4px 2px}}
+@media(max-width:560px){.tracknav{grid-template-columns:1fr}}
+
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
+h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
+.intro{max-width:690px;color:#aab9c9;font-size:16px;line-height:1.65;margin:0}
+.status{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px;color:#9bb0c4;font-size:13px}
+.dot{width:8px;height:8px;background:#64748b;border-radius:50%}.dot.ok{background:#60dba7}.dot.unavailable{background:#ffbf69}
+.section-header{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin:48px 0 15px}
+h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#90a7bc}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card,.panel{border:1px solid #293b4e;background:#111d2b;border-radius:14px}
+.card{padding:23px 22px;min-width:0}.card .label{font-size:12px;color:#a4bad0;font-weight:650}.card .value{font-size:clamp(23px,3vw,37px);font-weight:720;letter-spacing:-.04em;line-height:1.2;margin:15px 0 8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.card .unit{font-size:12px;color:#89a5bb}
+.panel{padding:23px 22px}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 30px}
+.key{font-size:11px;color:#90a9c0;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}.datum{font-size:14px;color:#ebf1fa;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}.table{border-collapse:collapse;width:100%;min-width:630px;font-variant-numeric:tabular-nums}
+.table th{text-align:left;font-weight:650;font-size:12px;color:#97adc1;border-bottom:1px solid #304257;padding:13px 12px;white-space:nowrap}
+.table td{font-size:14px;padding:16px 12px;border-bottom:1px solid #223246}.table tbody tr:last-child td{border:0}.table th:not(:first-child),.table td:not(:first-child){text-align:right}
+.lane{font-weight:650;color:#f1f7fc}.muted{color:#90a6bc}.fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:850px}
+footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
+@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}}
+@media(prefers-reduced-motion:no-preference){a{transition:color .18s}}
+</style>
+<style>
+.compare-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(220px,1fr);gap:34px;align-items:start}
+.bars{display:flex;flex-direction:column;gap:24px}.bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:9px;font-size:14px}
+.bar-head .numeric{font-variant-numeric:tabular-nums;font-size:18px}.bar-head small{color:#95abc0;font-size:11px;font-weight:500}
+.bar-bg{height:12px;border-radius:8px;background:#243448;overflow:hidden}.bar-fill{height:100%;border-radius:8px;background:#7088a6}
+.bar-fill.accent{background:linear-gradient(90deg,#218dac,#78dffd)}
+.bar-sub{font-size:12px;color:#8daac2;margin-top:8px}.aside-result{border-left:1px solid #34475c;padding-left:24px}
+.overline{text-transform:uppercase;font-size:11px;letter-spacing:.09em;color:#9dbbd2;font-weight:700}
+.advantage{font-weight:750;letter-spacing:-.04em;font-size:35px;margin:18px 0}
+.advantage span{display:block;font-weight:500;letter-spacing:0;font-size:14px;color:#abc6d8}
+.aside-result p{line-height:1.6;font-size:14px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.pills span{font-size:12px;border:1px solid #34506c;border-radius:30px;padding:7px 11px;background:#12263a}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.jump a{padding:8px 12px;border-radius:10px;border:1px solid #31506a;font-size:13px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fact{padding:18px;border:1px solid #2a4054;border-radius:12px;background:#111d2b}
+.fact span{font-size:12px;color:#91aabd}.fact strong{display:block;margin:8px 0;font-size:16px}
+details{margin-top:22px}summary{cursor:pointer;color:#aedcff;font-size:13px}
+@media(max-width:720px){.compare-grid{grid-template-columns:1fr;gap:24px}.aside-result{border-left:0;border-top:1px solid #34475c;padding:20px 0 0}.facts{grid-template-columns:1fr}.bar-head .numeric{font-size:16px}}
+</style></head><body><main class="wrapper">
+<header class="top">
+<div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Benchmark tracks and code">
+<div class="tracknav" aria-label="Algorithm tracks">
+<div class="track">
+<a class="track-page" href="./">Base</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/src/main.odin" aria-label="Base source code on GitHub" title="Base source code">Source ↗</a>
+</div>
+<div class="track">
+<a class="track-page" href="./wheel30.html">Wheel-30</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin" aria-label="Wheel-30 source code on GitHub" title="Wheel-30 source code">Source ↗</a>
+</div>
+<div class="track">
+<a class="track-page" href="./wheel.html">Wheel-210</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin" aria-label="Wheel-210 source code on GitHub" title="Wheel-210 source code">Source ↗</a>
+</div>
+</div>
+<a class="nav-competition" href="./local.html" aria-current="page">Local machine</a>
+<a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
+</nav>
+</header>
+<p class="eyebrow">LOCAL MACHINE · INTEL CORE i9-12900H</p>
+<h1>Three sieves. <span>One machine.</span></h1>
+<p class="intro">Base, Wheel-30 and Wheel-210 measured sequentially on the same Windows laptop. Results from this <strong>local machine</strong> are separate from GitHub Actions measurements on the algorithm pages.</p>
+<div class="pills"><span>Windows 11</span><span>Odin dev-2026-10</span><span>1,000,000 limit</span><span>5 seconds per run</span></div>
+<div class="jump"><a href="#single">1 thread ↓</a><a href="#multi">20 threads ↓</a><a href="#method">How it was tested ↓</a></div>
+<section id="single" aria-labelledby="single-title"><div class="section-header"><h2 id="single-title">Single-thread</h2><span class="small">6 confirmation blocks · one worker</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">27,417.60 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 27,417.60 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 0.75% · 6 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">24,108.04 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 24,108.04 passes per second"><div class="bar-fill " style="width:87.93%"></div></div><div class="bar-sub">Variation (CV): 1.54% · 6 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">12,076.00 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 12,076.00 passes per second"><div class="bar-fill " style="width:44.04%"></div></div><div class="bar-sub">Variation (CV): 0.73% · 6 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">13.22% <span>higher throughput</span></div><p>Wheel-30 led in <strong>6/6 blocks</strong>.</p><p class="fineprint">Median of block-by-block ratios.</p></aside></div></section>
+<section id="multi" aria-labelledby="multi-title"><div class="section-header"><h2 id="multi-title">Multi-thread</h2><span class="small">7 paired blocks · twenty workers</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">125,314.62 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 125,314.62 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 1.77% · 7 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">85,884.87 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 85,884.87 passes per second"><div class="bar-fill " style="width:68.54%"></div></div><div class="bar-sub">Variation (CV): 2.19% · 7 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">48,063.93 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 48,063.93 passes per second"><div class="bar-fill " style="width:38.35%"></div></div><div class="bar-sub">Variation (CV): 2.02% · 7 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">46.54% <span>higher throughput</span></div><p>Wheel-30 led in <strong>7/7 blocks</strong>.</p><p class="fineprint">Median of block-by-block ratios.</p></aside></div></section>
+<section id="method"><div class="section-header"><h2>How it was tested</h2><span class="small">11 October 2026</span></div>
+<div class="facts"><div class="fact"><span>CPU</span><strong>Intel Core i9-12900H</strong><span>14 cores · 20 logical processors</span></div>
+<div class="fact"><span>Compiler</span><strong>Odin dev-2026-10</strong><span>LLVM 20.1.0 · native optimization</span></div>
+<div class="fact"><span>Correctness</span><strong>78,498 primes · PASS</strong><span>Independent sieve oracle and 20-worker stress checks</span></div></div>
+<p class="fineprint">Each implementation used its original sieve kernel and the same compiler flags. Single-thread results come from six confirmation blocks. The 20-thread results come from seven rotating-order blocks, each measured using a shared five-second window and 20 threads in one process. The Wheel-30 20-thread measurements used a separate research runner; its public CI entry still runs one thread.</p>
+<p class="fineprint">Read each chart independently: the timing protocols differ between single and multi-thread, so these numbers are not a scaling-efficiency calculation. Temperature, package power and throttling indicators were unavailable; Windows background activity and hybrid-core scheduling remain possible sources of variation. This is not the official <a href="https://plummerssoftwarellc.github.io/PrimeView/">PrimeView</a> leaderboard.</p>
+<details><summary>Show all seven 20-thread blocks</summary><div class="panel tablewrap" style="margin-top:14px"><table class="table"><thead><tr><th>Block</th><th>Base E22</th><th>Wheel-30</th><th>Wheel-210</th></tr></thead><tbody>
+<tr><td>1</td><td>48,830</td><td>125,315</td><td>84,813</td></tr>
+<tr><td>2</td><td>47,946</td><td>128,623</td><td>85,885</td></tr>
+<tr><td>3</td><td>48,064</td><td>124,044</td><td>87,228</td></tr>
+<tr><td>4</td><td>49,204</td><td>122,772</td><td>86,280</td></tr>
+<tr><td>5</td><td>47,833</td><td>125,379</td><td>88,028</td></tr>
+<tr><td>6</td><td>46,205</td><td>127,920</td><td>82,525</td></tr>
+<tr><td>7</td><td>48,595</td><td>123,397</td><td>84,206</td></tr>
+</tbody></table></div></details>
+<p class="fineprint"><a href="./local-i9-12900h.json">Per-block data and provenance (JSON) ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/commit/af227f9fbe9278ec02b16f0ddbc38febd432abab">Source revision tested ↗</a></p></section>
+<footer><a href="./">Base</a> · <a href="./wheel30.html">Wheel-30</a> · <a href="./wheel.html">Wheel-210</a> · <a href="https://github.com/megaalive/odin-primes-drag">GitHub source</a></footer>
+</main></body></html>
