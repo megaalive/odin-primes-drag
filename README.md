@@ -44,3 +44,10 @@ The [Base dashboard](https://megaalive.github.io/odin-primes-drag/) and [Wheel-2
 ## Wheel-210 files and validation
 
 Wheel-210 lives in [`wheel210/`](wheel210/) alongside the Base implementation. Its [source](wheel210/main.odin), [oracle tests](wheel210/tests.odin), [Dockerfile](wheel210/Dockerfile), and [build notes](wheel210/README.md) are public. The GitHub Actions workflow separately builds, checks and benchmarks both algorithms, then publishes Pages only when both pass. The [Wheel dashboard](https://megaalive.github.io/odin-primes-drag/wheel.html) shows actual CI runner throughput, CPU metadata and compiler provenance. Historical laptop numbers remain explicitly developer-reported, not comparable to results from different CPUs or official PrimeView.
+
+
+## Wheel-30 — third independent algorithm
+
+Wheel-30 has its own [public dashboard](https://megaalive.github.io/odin-primes-drag/wheel30.html), [source](wheel30/main.odin), [Dockerfile](wheel30/Dockerfile), [build notes](wheel30/README.md), and a checksum-pinned GitHub CI job. It runs a **single-thread** lane, checked against an independent oracle at multiple limits before the timed pass. The public [developer-reported Intel Xeon duel](wheel30-reported.json) is clearly separate from public CI measurements and official PrimeView rankings.
+
+The user reported approximately five-second single-thread passes of Wheel-30 105302, Rust PR #1092 87166, assembly PR #1093 86413, C solution_5 60659, and C solution_2 29946. Rust used a different compiler than specified by the PR, Zig PRs were not benchmarked and the exact Intel Xeon model and raw logs were not supplied. These are useful local experimental observations, **not proof of universal victory or a verified official leaderboard**. Wheel-30 joins Base and Wheel-210 as a complementary Odin strategy.

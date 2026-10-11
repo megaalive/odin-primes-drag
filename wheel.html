@@ -21,8 +21,8 @@ a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-v
 .track a:hover{background:#294b66;color:#fff}
 .track-source:focus-visible,.track-page:focus-visible{outline-offset:-3px}
 .nav-competition{color:#9fbdd4;white-space:nowrap;padding:8px 2px}
-@media(max-width:720px){.topnav{width:100%;gap:8px}.tracknav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px}.track-page{flex:1;justify-content:center}.nav-competition{padding:4px 2px}}
-@media(max-width:370px){.tracknav{grid-template-columns:1fr}}
+@media(max-width:720px){.topnav{width:100%;gap:8px}.tracknav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:8px}.track-page{flex:1;justify-content:center}.nav-competition{padding:4px 2px}}
+@media(max-width:560px){.tracknav{grid-template-columns:1fr}}
 
 .eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
 h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
@@ -58,11 +58,15 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <a class="track-page" href="./wheel.html" aria-current="page">Wheel-210</a>
 <a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin" aria-label="Wheel-210 source code on GitHub" title="Wheel-210 source code">Source ↗</a>
 </div>
+<div class="track">
+<a class="track-page" href="./wheel30.html">Wheel-30</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin" aria-label="Wheel-30 source code on GitHub" title="Wheel-30 source code">Source ↗</a>
+</div>
 </div>
 <a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
 </nav></header>
 <p class="eyebrow">WHEEL-210 · PUBLIC CI</p><h1>Wheel-210. <span>Measured.</span></h1>
-<p class="intro">The source, tests and checksum-pinned Odin dev-2026-10 build are <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">available in this repository</a>. The primary figures below come from the actual GitHub Actions runner. The <a href="./">Base track</a> is measured independently. Both are Odin approaches to challenge non-Odin implementations, not opponents competing for one internal crown. Developer-reported laptop figures appear separately, not as CI evidence.</p>
+<p class="intro">The source, tests and checksum-pinned Odin dev-2026-10 build are <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">available in this repository</a>. The primary figures below come from the actual GitHub Actions runner. The <a href="./">Base</a> and <a href="./wheel30.html">Wheel-30</a> tracks are measured independently. Both are Odin approaches to challenge non-Odin implementations, not opponents competing for one internal crown. Developer-reported laptop figures appear separately, not as CI evidence.</p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot" aria-hidden="true"></span><span id="status-label">Loading verified CI evidence…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI runs ↗</a></div>
 <section aria-labelledby="summary-title"><div class="section-header"><h2 id="summary-title">Latest verified CI measurement</h2><span class="small">Limit 1,000,000 · five-second tests</span></div>
 <div class="cards">

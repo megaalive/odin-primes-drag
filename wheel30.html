@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark"><title>Wheel-30 · Odin Primes</title>
+<meta name="description" content="Odin Wheel-30 public single-thread CI and distinctly labeled developer-reported local duel.">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
+a{color:#a4d6ff;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #8de0ff;outline-offset:4px}
+.wrapper{max-width:1080px;margin:auto;padding:32px 24px 76px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid #253345;padding-bottom:24px}
+.wordmark{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.04em}
+.symbol{display:grid;place-items:center;border-radius:12px;width:42px;height:42px;background:#162d43;color:#79d5fc;border:1px solid #315272}
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px}
+.tracknav{display:flex;gap:8px;flex-wrap:wrap}
+.track{display:flex;align-items:stretch;min-width:0;white-space:nowrap;border:1px solid #30465e;border-radius:10px;overflow:hidden;background:#111e2d}
+.track.is-active{border-color:#528db8;background:#18334c}
+.track a{display:inline-flex;align-items:center;min-height:38px;text-decoration:none}
+.track-page{padding:0 13px;font-weight:700;color:#e6f2ff}
+.track-source{padding:0 11px;border-left:1px solid #30465e;color:#99c4e2;font-size:12px}
+.track a:hover{background:#294b66;color:#fff}
+.track-source:focus-visible,.track-page:focus-visible{outline-offset:-3px}
+.nav-competition{color:#9fbdd4;white-space:nowrap;padding:8px 2px}
+@media(max-width:720px){.topnav{width:100%;gap:8px}.tracknav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:8px}.track-page{flex:1;justify-content:center}.nav-competition{padding:4px 2px}}
+@media(max-width:560px){.tracknav{grid-template-columns:1fr}}
+
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#91c6ea;margin:54px 0 14px}
+h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.045em;line-height:1.08;margin:0 0 18px}h1 span{color:#7dd9ff}
+.intro{max-width:730px;color:#aab9c9;font-size:16px;line-height:1.65;margin:0}
+.status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:22px 0 0;color:#9bb0c4;font-size:13px}
+.dot{width:8px;height:8px;background:#ffbf69;border-radius:50%;flex:none}
+.section-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:48px 0 15px}
+h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#90a7bc}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card,.panel{border:1px solid #293b4e;background:#111d2b;border-radius:14px}
+.card{padding:23px 22px;min-width:0}.card .label{font-size:12px;color:#a4bad0;font-weight:650}
+.card .value{font-size:clamp(23px,3vw,37px);font-weight:720;letter-spacing:-.04em;line-height:1.2;margin:15px 0 8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .unit{font-size:12px;color:#89a5bb}.panel{padding:23px 22px}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 30px}
+.key{font-size:11px;color:#90a9c0;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}
+.datum{font-size:14px;color:#ebf1fa;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}.table{border-collapse:collapse;width:100%;min-width:530px;font-variant-numeric:tabular-nums}
+.table th{text-align:left;font-weight:650;font-size:12px;color:#97adc1;border-bottom:1px solid #304257;padding:13px 12px;white-space:nowrap}
+.table td{font-size:14px;padding:16px 12px;border-bottom:1px solid #223246}.table tbody tr:last-child td{border:0}.table th:not(:first-child),.table td:not(:first-child){text-align:right}
+.fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:900px}
+footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
+@media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}}
+</style>
+<style>.table{min-width:530px}.report-tag{border:1px solid #315272;border-radius:9px;padding:6px 10px;color:#a4d6ff;font-size:12px}</style></head>
+<body><main class="wrapper"><header class="top"><div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Benchmark tracks and code">
+<div class="tracknav" aria-label="Algorithm tracks">
+<div class="track">
+<a class="track-page" href="./">Base</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/src/main.odin" aria-label="Base source code on GitHub" title="Base source code">Source ↗</a>
+</div>
+<div class="track">
+<a class="track-page" href="./wheel.html">Wheel-210</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin" aria-label="Wheel-210 source code on GitHub" title="Wheel-210 source code">Source ↗</a>
+</div>
+<div class="track is-active">
+<a class="track-page" href="./wheel30.html" aria-current="page">Wheel-30</a>
+<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin" aria-label="Wheel-30 source code on GitHub" title="Wheel-30 source code">Source ↗</a>
+</div>
+</div>
+<a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
+</nav></header>
+<p class="eyebrow">WHEEL-30 · PUBLIC SINGLE-THREAD BENCHMARK</p>
+<h1>Wheel-30. <span>Measured.</span></h1>
+<p class="intro">Wheel-30 stores eight candidate residues per byte, uses a periodic small-prime mask, 32-byte SIMD marking, and residue-specialized loops for larger dynamically discovered primes. Each pass allocates and computes a new sieve. Base, Wheel-210 and Wheel-30 have one goal: <strong>challenge the fastest non-Odin competitors</strong>, not one another.</p>
+<div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot"></span><span id="status-label">Loading verified Wheel-30 CI…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
+<section><div class="section-header"><h2>Latest GitHub Actions measurement</h2><span class="small">One thread · 1,000,000 limit · five-second pass</span></div>
+<div class="cards">
+<div class="card"><div class="label">Wheel-30 · CI throughput</div><div class="value" id="throughput">—</div><div class="unit">complete sieves per second</div></div>
+<div class="card"><div class="label">Completed passes · CI</div><div class="value" id="passes">—</div><div class="unit">actual measured passes</div></div>
+<div class="card"><div class="label">GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit">not the local Xeon report below</div></div>
+</div>
+<div class="panel" style="margin-top:14px"><div class="meta">
+<div><div class="key">Runner CPU</div><div class="datum" id="cpu">—</div></div>
+<div><div class="key">Logical CPUs / affinity</div><div class="datum" id="affinity">—</div></div>
+<div><div class="key">Pinned compiler</div><div class="datum" id="compiler">—</div></div>
+<div><div class="key">Build flags</div><div class="datum" id="flags">—</div></div>
+<div><div class="key">Tested revision</div><div class="datum" id="revision">—</div></div>
+<div><div class="key">Measurement time UTC</div><div class="datum" id="observed">—</div></div>
+</div></div>
+<p class="fineprint">The exact public source is checked against an independent oracle at multiple limits before CI benchmarking. No Wheel-30 parallel lane exists in the uploaded implementation. Proposed <code>algorithm=wheel,faithful=yes,bits=1</code> classification awaits upstream review.</p>
+</section>
+<section><div class="section-header"><h2>Reported local Intel Xeon duel</h2><span class="report-tag">Developer-provided · not CI</span></div>
+<p class="fineprint" id="local-note">Loading reported results…</p>
+<div class="panel tablewrap"><table class="table">
+<thead><tr><th>Implementation</th><th>Passes / reported 5 seconds</th><th>Odin / opponent</th></tr></thead>
+<tbody id="local-rows"><tr><td colspan="3">Local measurements not available</td></tr></tbody>
+</table></div>
+<p class="fineprint"><strong>Evidence limitations:</strong> exact Xeon SKU, raw run logs, and full thermal controls were not supplied. Rust PR #1092 was built using Rust 1.75 with nightly flags instead of its specified 1.99 toolchain; Zig PRs #1090 and #1094 were not tested. This is not an official PrimeView ranking, and no universal victory against non-Odin is claimed.</p>
+<p class="fineprint"><a href="./wheel30-reported.json">Developer-reported data JSON ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin">Public source ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel30">Dockerfile and build notes ↗</a></p>
+</section>
+<section><div class="section-header"><h2>Three Odin approaches</h2></div><p class="fineprint"><a href="./">Base</a> uses an odd-only packed-bit sieve, <a href="./wheel.html">Wheel-210</a> packs 48 candidates per 64-bit block, and Wheel-30 stores eight residues per byte. Their evidence and CI categories are kept distinct. Official results: <a href="https://plummerssoftwarellc.github.io/PrimeView/">PrimeView</a>.</p></section>
+<footer>Source and validation on <a href="https://github.com/megaalive/odin-primes-drag">GitHub</a>. CI results and local developer reports are never combined into one leaderboard.</footer>
+</main><script>
+"use strict";
+const el=id=>document.getElementById(id);
+const fmt=(n,d=1)=>Number(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const show=(id,v)=>{el(id).textContent=v??"—"};
+async function loadCI(){
+ try {
+  const r=await fetch("./wheel30-ci.json",{cache:"no-store"});if(!r.ok)throw Error();
+  const d=await r.json(), x=d.lanes?.[0];
+  if(d.status!=="passed"||d.track!=="wheel-30"||d.source!=="github-actions"||d.lanes?.length!==1||!d.host?.cpu_model||!d.run_id||!d.commit||x.label!=="odin_wheel30"||x.workers!==1||x.bits!==1||x.passes<=0||x.seconds<5||x.seconds>=60)throw Error();
+  show("throughput",fmt(x.passes_per_second));show("passes",fmt(x.passes,0));
+  show("cpu-short",d.host.cpu_model);show("cpu",d.host.cpu_model);
+  show("affinity",d.host.logical_cpus+" / "+d.host.affinity_cpus);
+  show("compiler",d.compiler);show("flags",d.build_flags);show("revision",d.commit.slice(0,12));
+  show("observed",new Date(d.measured_at_utc).toLocaleString("en-US",{timeZone:"UTC"})+" UTC");
+  el("run-link").href="https://github.com/megaalive/odin-primes-drag/actions/runs/"+encodeURIComponent(d.run_id);
+  el("status-dot").className="dot ok";show("status-label","Verified GitHub Actions Wheel-30 measurement");
+ }catch(e){el("status-dot").className="dot unavailable";show("status-label","No verified Wheel-30 CI measurement available yet")}
+}
+async function loadLocal(){
+ try {
+  const r=await fetch("./wheel30-reported.json",{cache:"no-store"});if(!r.ok)throw Error();
+  const d=await r.json();
+  if(d.status!=="reported"||d.track!=="wheel-30"||d.source!=="developer-provided"||d.competitors?.length!==5)throw Error();
+  show("local-note",d.hardware.cpu_description+" · "+d.window_description+". These are local, developer-reported measurements.");
+  const body=el("local-rows");body.replaceChildren();
+  const own=d.competitors.find(x=>x.id==="odin-wheel30")?.passes;
+  if(!own)throw Error();
+  for(const item of d.competitors){
+   const tr=document.createElement("tr");
+   for(const value of [item.name,fmt(item.passes,0),item.id==="odin-wheel30"?"reference":fmt(own/item.passes,3)+"×"]){
+    const td=document.createElement("td");td.textContent=value;tr.appendChild(td);
+   }body.appendChild(tr);
+  }
+ }catch(e){show("local-note","The developer-reported local record could not be loaded")}
+}
+Promise.all([loadCI(),loadLocal()]);
+</script></body></html>
