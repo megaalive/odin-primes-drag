@@ -231,7 +231,7 @@ jobs:
           path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel30.html local.html local-i9-12900h.json wheel210-reported.json base-intel12900h.json site/
+          cp index.html wheel.html wheel30.html local.html local-i9-12900h.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

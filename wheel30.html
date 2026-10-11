@@ -68,7 +68,8 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </header>
 <p class="eyebrow">WHEEL-30 · PUBLIC SINGLE-THREAD BENCHMARK</p>
 <h1>Wheel-30. <span>Measured.</span></h1>
-<p class="intro">Wheel-30 packs eight candidate residues per byte, combines periodic small-prime masks with 32-byte SIMD marking, and uses residue-specialized loops for larger factors. Every pass builds a fresh sieve. Its public CI benchmark runs one thread. <a href="./local.html">See the Intel i9 comparison with one and twenty threads ↗</a></p>
+<p class="intro">Wheel-30 packs eight candidate residues per byte and combines presieving with 32-byte SIMD marking. Every pass builds a fresh sieve. Results below are from its single-thread GitHub Actions benchmark.</p>
+<p class="source-link"><a href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin">View Wheel-30 source ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel30">Build notes ↗</a></p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot"></span><span id="status-label">Loading verified Wheel-30 CI…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
 <section><div class="section-header"><h2>Latest GitHub Actions measurement</h2><span class="small">One thread · 1,000,000 limit · five-second pass</span></div>
 <div class="cards">
@@ -84,7 +85,7 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <div><div class="key">Tested revision</div><div class="datum" id="revision">—</div></div>
 <div><div class="key">Measurement time UTC</div><div class="datum" id="observed">—</div></div>
 </div></div>
-<p class="fineprint">Before each CI benchmark, the public source is checked against an independent reference sieve at multiple limits. The public competition entry runs one thread; a separate research runner measured twenty threads locally. The proposed <code>faithful=yes</code> classification awaits upstream review.</p>
+<p class="fineprint">Before each CI benchmark, the public source is checked against an independent reference sieve at multiple limits. This public CI entry measures one thread. The proposed <code>faithful=yes</code> classification awaits upstream review.</p>
 </section>
 <footer><a href="https://github.com/megaalive/odin-primes-drag">Source &amp; CI results</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView rankings</a></footer>
 </main><script>

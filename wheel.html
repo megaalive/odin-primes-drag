@@ -68,7 +68,8 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </div><a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a></nav>
 </header>
 <p class="eyebrow">WHEEL-210 · PUBLIC CI</p><h1>Wheel-210. <span>Measured.</span></h1>
-<p class="intro">Wheel-210 packs 48 candidate residues into a compact bitset, with single-thread and parallel benchmarks. Its <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">source, tests and checksum-pinned Odin build</a> are public. GitHub Actions results appear first, followed by an earlier local run. <a href="./local.html">Compare all three on the Intel i9 ↗</a></p>
+<p class="intro">Wheel-210 packs 48 wheel residues in a compact bitset, with separate single-thread and parallel benchmarks. Results below are from the GitHub Actions runner.</p>
+<p class="source-link"><a href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin">View Wheel-210 source ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">Build and tests ↗</a></p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot" aria-hidden="true"></span><span id="status-label">Loading verified CI evidence…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI runs ↗</a></div>
 <section aria-labelledby="summary-title"><div class="section-header"><h2 id="summary-title">Latest verified CI measurement</h2><span class="small">Limit 1,000,000 · five-second tests</span></div>
 <div class="cards">
@@ -87,12 +88,8 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <section aria-labelledby="lanes-title"><div class="section-header"><h2 id="lanes-title">CI output lanes</h2><span class="small">algorithm=wheel · bits=1 · proposed faithful=yes</span></div>
 <div class="panel tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
 <tbody id="lanes"><tr><td colspan="5">No verified result published.</td></tr></tbody></table></div></section>
-<section aria-labelledby="laptop-title"><div class="section-header"><h2 id="laptop-title">Local machine · Intel Core i9-12900H</h2><span class="small">Separate machine · Odin dev-2026-10</span></div><div class="panel">
-<p class="fineprint" id="laptop-note">Loading local machine results…</p>
-<div class="tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
-<tbody id="laptop-lanes"><tr><td colspan="5">Local machine results unavailable.</td></tr></tbody></table></div></div></section>
 <section aria-labelledby="notes-title"><div class="section-header"><h2 id="notes-title">Interpretation</h2></div>
-<p class="fineprint">Wheel-210 passes independent prime-membership checks in CI. Its <code>faithful=yes</code> classification is still subject to upstream review. The GitHub runner and local machine use different hardware, so their results are shown separately. Official competition rankings are maintained by PrimeView.</p></section>
+<p class="fineprint">Wheel-210 passes independent prime-membership checks in CI. Its <code>faithful=yes</code> classification is still subject to upstream review. Only GitHub Actions measurements appear here; official competition rankings are maintained by PrimeView.</p></section>
 <footer><a href="./">Base CI results</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">Wheel source</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView</a></footer>
 </main><script>
 "use strict";
@@ -126,13 +123,5 @@ async function ci(){
   el("run-link").href="https://github.com/megaalive/odin-primes-drag/actions/runs/"+encodeURIComponent(data.run_id);
  }catch(error){put("status-label","No verified Wheel-210 CI measurement published");el("status-dot").className="dot unavailable"}
 }
-async function laptop(){
- try{
-  const d=await fetchData("./wheel210-reported.json");
-  if(d.status!=="reported"||d.track!=="wheel-210"||!Array.isArray(d.lanes)||d.lanes.length!==2)throw Error("invalid laptop report");
-  put("laptop-note",d.host.cpu_model+" · "+d.compiler.replace(" (reported; exact build SHA unverified)"," (build revision not recorded)")+" · "+d.reported_date+". Run on a local machine, separate from the GitHub Actions runner.");
-  render("laptop-lanes",d.lanes);
- }catch(error){put("laptop-note","Local machine results unavailable")}
-}
-Promise.all([ci(),laptop()]);
+ci();
 </script></body></html>
