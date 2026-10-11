@@ -66,13 +66,13 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </nav></header>
 <p class="eyebrow">WHEEL-30 · PUBLIC SINGLE-THREAD BENCHMARK</p>
 <h1>Wheel-30. <span>Measured.</span></h1>
-<p class="intro">Wheel-30 stores eight candidate residues per byte, uses a periodic small-prime mask, 32-byte SIMD marking, and residue-specialized loops for larger dynamically discovered primes. Each pass allocates and computes a new sieve. Base, Wheel-210 and Wheel-30 have one goal: <strong>challenge the fastest non-Odin competitors</strong>, not one another.</p>
+<p class="intro">Wheel-30 packs eight candidate residues per byte, combines periodic small-prime masks with 32-byte SIMD marking, and uses residue-specialized loops for larger factors. Every pass builds a fresh sieve. This track currently benchmarks a single thread.</p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot"></span><span id="status-label">Loading verified Wheel-30 CI…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
 <section><div class="section-header"><h2>Latest GitHub Actions measurement</h2><span class="small">One thread · 1,000,000 limit · five-second pass</span></div>
 <div class="cards">
 <div class="card"><div class="label">Wheel-30 · CI throughput</div><div class="value" id="throughput">—</div><div class="unit">complete sieves per second</div></div>
 <div class="card"><div class="label">Completed passes · CI</div><div class="value" id="passes">—</div><div class="unit">actual measured passes</div></div>
-<div class="card"><div class="label">GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit">not the local Xeon report below</div></div>
+<div class="card"><div class="label">GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit">Recorded on the GitHub Actions runner</div></div>
 </div>
 <div class="panel" style="margin-top:14px"><div class="meta">
 <div><div class="key">Runner CPU</div><div class="datum" id="cpu">—</div></div>
@@ -82,10 +82,9 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <div><div class="key">Tested revision</div><div class="datum" id="revision">—</div></div>
 <div><div class="key">Measurement time UTC</div><div class="datum" id="observed">—</div></div>
 </div></div>
-<p class="fineprint">The exact public source is checked against an independent oracle at multiple limits before CI benchmarking. No Wheel-30 parallel lane exists in the uploaded implementation. Proposed <code>algorithm=wheel,faithful=yes,bits=1</code> classification awaits upstream review.</p>
+<p class="fineprint">Before each CI benchmark, the public source is checked against an independent reference sieve at multiple limits. The implementation is single-threaded; the proposed <code>faithful=yes</code> classification awaits upstream review.</p>
 </section>
-<section><div class="section-header"><h2>Three Odin approaches</h2></div><p class="fineprint"><a href="./">Base</a> uses an odd-only packed-bit sieve, <a href="./wheel.html">Wheel-210</a> packs 48 candidates per 64-bit block, and Wheel-30 stores eight residues per byte. Their evidence and CI categories are kept distinct. Official results: <a href="https://plummerssoftwarellc.github.io/PrimeView/">PrimeView</a>.</p></section>
-<footer>Source and validation on <a href="https://github.com/megaalive/odin-primes-drag">GitHub</a>. Only independently validated GitHub Actions evidence is displayed for Wheel-30; this is not the official leaderboard.</footer>
+<footer><a href="https://github.com/megaalive/odin-primes-drag">Source &amp; CI results</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView rankings</a></footer>
 </main><script>
 "use strict";
 const el=id=>document.getElementById(id);

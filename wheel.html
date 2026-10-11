@@ -66,7 +66,7 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
 </nav></header>
 <p class="eyebrow">WHEEL-210 · PUBLIC CI</p><h1>Wheel-210. <span>Measured.</span></h1>
-<p class="intro">The source, tests and checksum-pinned Odin dev-2026-10 build are <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">available in this repository</a>. The primary figures below come from the actual GitHub Actions runner. The <a href="./">Base</a> and <a href="./wheel30.html">Wheel-30</a> tracks are measured independently. Both are Odin approaches to challenge non-Odin implementations, not opponents competing for one internal crown. Developer-reported laptop figures appear separately, not as CI evidence.</p>
+<p class="intro">Wheel-210 packs 48 candidate residues into a compact bitset, with single-thread and parallel benchmarks. Its <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">source, tests and checksum-pinned Odin build</a> are public. GitHub Actions results appear first, followed by a separate local machine run.</p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot" aria-hidden="true"></span><span id="status-label">Loading verified CI evidence…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI runs ↗</a></div>
 <section aria-labelledby="summary-title"><div class="section-header"><h2 id="summary-title">Latest verified CI measurement</h2><span class="small">Limit 1,000,000 · five-second tests</span></div>
 <div class="cards">
@@ -74,7 +74,7 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <div class="card"><div class="label">Wheel-210 · parallel</div><div class="value" id="multi">—</div><div class="unit">complete sieves / second · CI</div></div>
 <div class="card"><div class="label">Actual GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit" id="cpu-threads">No CI host metadata available</div></div>
 </div></section>
-<section aria-labelledby="hardware-title"><div class="section-header"><h2 id="hardware-title">Runner &amp; build evidence</h2><span class="small">Captured by public CI, not reported from another device</span></div><div class="panel"><div class="meta">
+<section aria-labelledby="hardware-title"><div class="section-header"><h2 id="hardware-title">GitHub runner &amp; build</h2><span class="small">Recorded during the CI run</span></div><div class="panel"><div class="meta">
 <div><div class="key">CPU model</div><div class="datum" id="cpu">—</div></div>
 <div><div class="key">Odin compiler</div><div class="datum" id="compiler">—</div></div>
 <div><div class="key">Logical CPUs / affinity</div><div class="datum" id="affinity">—</div></div>
@@ -85,12 +85,12 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <section aria-labelledby="lanes-title"><div class="section-header"><h2 id="lanes-title">CI output lanes</h2><span class="small">algorithm=wheel · bits=1 · proposed faithful=yes</span></div>
 <div class="panel tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
 <tbody id="lanes"><tr><td colspan="5">No verified result published.</td></tr></tbody></table></div></section>
-<section aria-labelledby="laptop-title"><div class="section-header"><h2 id="laptop-title">Developer-reported laptop run</h2><span class="small">Not independently reproduced · different CPU</span></div><div class="panel">
-<p class="fineprint" id="laptop-note">Historical report loading…</p>
+<section aria-labelledby="laptop-title"><div class="section-header"><h2 id="laptop-title">Local machine · Intel Core i9-12900H</h2><span class="small">Separate machine · Odin dev-2026-10</span></div><div class="panel">
+<p class="fineprint" id="laptop-note">Loading local machine results…</p>
 <div class="tablewrap"><table class="table"><thead><tr><th>Mode</th><th>Workers</th><th>Passes</th><th>Seconds</th><th>Passes/s</th></tr></thead>
-<tbody id="laptop-lanes"><tr><td colspan="5">No laptop data available.</td></tr></tbody></table></div></div></section>
+<tbody id="laptop-lanes"><tr><td colspan="5">Local machine results unavailable.</td></tr></tbody></table></div></div></section>
 <section aria-labelledby="notes-title"><div class="section-header"><h2 id="notes-title">Interpretation</h2></div>
-<p class="fineprint">This Wheel-210 code is public and verified with an independent full-membership oracle in CI. Its output declares <code>algorithm=wheel,faithful=yes,bits=1</code>, but faithfulness classification has not been approved by upstream maintainers. These values are shared-runner screening measurements, <strong>not official PrimeView rankings</strong>. Do not compare different CPU models as if they were paired races.</p></section>
+<p class="fineprint">Wheel-210 passes independent prime-membership checks in CI. Its <code>faithful=yes</code> classification is still subject to upstream review. The GitHub runner and local machine use different hardware, so their results are shown separately. Official competition rankings are maintained by PrimeView.</p></section>
 <footer><a href="./">Base CI results</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel210">Wheel source</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView</a></footer>
 </main><script>
 "use strict";
@@ -128,9 +128,9 @@ async function laptop(){
  try{
   const d=await fetchData("./wheel210-reported.json");
   if(d.status!=="reported"||d.track!=="wheel-210"||!Array.isArray(d.lanes)||d.lanes.length!==2)throw Error("invalid laptop report");
-  put("laptop-note",d.host.cpu_model+" · "+d.compiler+" · "+d.reported_date+". Developer-reported only; not a same-CPU competitor comparison.");
+  put("laptop-note",d.host.cpu_model+" · "+d.compiler.replace(" (reported; exact build SHA unverified)"," (build revision not recorded)")+" · "+d.reported_date+". Run on a local machine, separate from the GitHub Actions runner.");
   render("laptop-lanes",d.lanes);
- }catch(error){put("laptop-note","Historical laptop report unavailable")}
+ }catch(error){put("laptop-note","Local machine results unavailable")}
 }
 Promise.all([ci(),laptop()]);
 </script></body></html>

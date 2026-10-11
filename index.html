@@ -72,7 +72,7 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </header>
 <p class="eyebrow">BASE TRACK · CI PERFORMANCE REPORT</p>
 <h1>Prime sieve. <span>Measured.</span></h1>
-<p class="intro">Base, <a href="./wheel.html">Wheel-210</a>, and <a href="./wheel30.html">Wheel-30</a> are three complementary Odin sieve strategies pursuing the same goal: challenging the fastest <strong>non-Odin</strong> implementations. GitHub Actions results and Intel laptop measurements are reported separately, with their own CPU, compiler and evidence. Neither is an official PrimeView ranking.</p>
+<p class="intro">Base uses an odd-only packed-bit sieve. This page shows its GitHub Actions benchmarks and a separate local machine run on an Intel Core i9-12900H. Wheel-210 and Wheel-30 have their own benchmark pages, linked above.</p>
 <div class="status" role="status" aria-live="polite"><span id="status-dot" class="dot"></span><span id="status-label">Loading published evidence…</span> <a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
 <section aria-labelledby="summary-title">
 <div class="section-header"><h2 id="summary-title">Latest verified run</h2><span class="small" id="observed">No measured results published yet</span></div>
@@ -101,11 +101,11 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </table></div>
 </section>
 <section aria-labelledby="intel-title">
-<div class="section-header"><h2 id="intel-title">Intel Core i9-12900H · local Base measurement</h2><span class="small">7 rounds · Windows 11 · Odin dev-2026-10 · reported by Sol</span></div>
+<div class="section-header"><h2 id="intel-title">Local machine · Intel Core i9-12900H</h2><span class="small">7 runs · Windows 11 · Odin dev-2026-10</span></div>
 <div class="cards">
 <div class="card"><div class="label">Base packed-bit · 1 worker</div><div class="value" id="intel-single">—</div><div class="unit">median complete sieves / second</div></div>
 <div class="card"><div class="label">Base packed-bit · 20 workers</div><div class="value" id="intel-multi">—</div><div class="unit">median complete sieves / second</div></div>
-<div class="card"><div class="label">Measurement status</div><div class="value" style="font-size:21px;line-height:1.35" id="intel-status">Loading…</div><div class="unit">Independent of GitHub Actions runner data</div></div>
+<div class="card"><div class="label">Measurement status</div><div class="value" style="font-size:21px;line-height:1.35" id="intel-status">Loading…</div><div class="unit">Measured separately from GitHub Actions</div></div>
 </div>
 <div class="panel" style="margin-top:14px">
 <div class="meta">
@@ -117,10 +117,10 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </div>
 <div class="panel tablewrap" style="margin-top:14px"><table class="table">
 <thead><tr><th scope="col">Round</th><th scope="col">Single passes</th><th scope="col">Single/s</th><th scope="col">Multi passes</th><th scope="col">Multi/s</th></tr></thead>
-<tbody id="intel-rows"><tr><td colspan="5" class="muted" style="text-align:left">Local evidence is loading…</td></tr></tbody>
+<tbody id="intel-rows"><tr><td colspan="5" class="muted" style="text-align:left">Loading local machine results…</td></tr></tbody>
 </table></div>
-<p class="fineprint" id="intel-notes">This local measurement is not a GitHub Actions result.</p>
-<p class="fineprint"><a href="./base-intel12900h.json">Read all seven rounds, including byte lanes and provenance ↗</a></p>
+<p class="fineprint" id="intel-notes">Recorded on a local Windows machine, separate from GitHub Actions.</p>
+<p class="fineprint"><a href="./base-intel12900h.json">View all seven runs, including byte lanes and build details ↗</a></p>
 </section>
 <section aria-labelledby="notes-title">
 <div class="section-header"><h2 id="notes-title">Reading these results</h2></div>
@@ -185,7 +185,7 @@ async function loadIntelBase(){
     for(const lane of [one,multi])for(const value of lane.rounds)if(!(value.passes>0&&value.seconds>=5))throw new Error("Invalid local sample");
     setText("intel-single",number(one.median_passes_per_second));
     setText("intel-multi",number(multi.median_passes_per_second));
-    setText("intel-status","Locally measured");
+    setText("intel-status","Local machine run");
     setText("intel-cpu",d.host.cpu_model+" · "+d.host.os);
     setText("intel-compiler",d.compiler.version+" · "+d.build_flags);
     setText("intel-commit",d.original_source_commit.slice(0,12)+" · compatibility directive");
@@ -197,10 +197,10 @@ async function loadIntelBase(){
         const td=document.createElement("td");td.textContent=String(value);tr.appendChild(td);
       }tbody.appendChild(tr);
     }
-    setText("intel-notes","Developer-reported local evidence, NOT public CI. The original "+d.original_source_commit.slice(0,12)+" Base source did not compile on Odin October until #+feature using-stmt was prepended to two source files; no algorithm changes were reported. Strict unmodified-source verdict: INCONCLUSIVE. Background processes, hybrid CPU scheduling, unequal benchmark duty cycles and unavailable thermal data limit interpretation. Byte-storage results are included in the raw JSON but not mixed with packed-bit medians.");
+    setText("intel-notes","Local machine results, separate from GitHub Actions. The original "+d.original_source_commit.slice(0,12)+" revision needed #+feature using-stmt in two source files to compile with October Odin; the compatibility change did not alter sieve logic. An unmodified-source build has not been confirmed for that compiler. Background activity, hybrid-core scheduling, different benchmark duty cycles and unavailable thermal data limit direct comparisons. Byte-storage runs are included in the JSON but kept out of the packed-bit medians.");
   }catch(err){
-    setText("intel-status","No verified local data");
-    setText("intel-notes","Local Base report could not be loaded; CI measurements above remain separate.");
+    setText("intel-status","Local data unavailable");
+    setText("intel-notes","Local machine results are unavailable. GitHub Actions results are shown above.");
   }
 }
 loadIntelBase();

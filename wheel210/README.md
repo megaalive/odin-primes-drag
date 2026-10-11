@@ -19,6 +19,6 @@ The independent tests inspect all primality results through 1,000,000 against an
 
 ## Public CI and evidence
 
-The repository's [workflow](../.github/workflows/verify.yml) builds and tests Wheel-210 separately from Base, captures a five-second single and parallel benchmark, validates official-form output and publishes runner CPU, compiler version, source revision and run link at [Wheel-210 GitHub Pages](https://megaalive.github.io/odin-primes-drag/wheel.html). Reported laptop runs are displayed separately from CI.
+The repository's [workflow](../.github/workflows/verify.yml) builds and tests Wheel-210 separately from Base, captures a five-second single and parallel benchmark, validates official-form output and publishes runner CPU, compiler version, source revision and run link at [Wheel-210 GitHub Pages](https://megaalive.github.io/odin-primes-drag/wheel.html). Local machine results are shown separately from GitHub Actions measurements.
 
 This is reproducible screening evidence, **not** an official PrimeView ranking or a CPU-matched competitor victory. The code uses the repository's [BSD 3-Clause License](../LICENSE), and its proposed `faithful=yes` output classification remains subject to maintainer review. No upstream PR is opened by this change.
