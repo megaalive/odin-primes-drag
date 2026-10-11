@@ -44,27 +44,28 @@ h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#9
 .fineprint{font-size:13px;line-height:1.75;color:#9ab0c3;max-width:900px}
 footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
 @media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}}
+
+/* One tab per page; source links are shown beside the article. */
+.tracknav{display:flex;gap:7px;flex-wrap:wrap}
+.nav-tab{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid #314861;border-radius:10px;background:#101f30;color:#bdd8e9;font-weight:650;white-space:nowrap;text-decoration:none}
+.nav-tab.is-active{background:#1b3a54;border-color:#6096bd;color:#fff}
+.nav-tab:hover{background:#27465f;color:#fff;text-decoration:none}
+.nav-competition{color:#9cc5e3;padding:8px 5px}
+.source-link{margin:15px 0 0;font-size:13px}
+.source-link a{display:inline-flex;gap:6px;align-items:center;color:#95d3f6}
+@media(max-width:760px){.topnav{width:100%;gap:7px}.tracknav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.nav-tab{min-width:0}.nav-competition{padding:6px 3px}}
+
 </style>
 </head>
-<body><main class="wrapper"><header class="top"><div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
-<nav class="topnav" aria-label="Benchmark tracks and code">
-<div class="tracknav" aria-label="Algorithm tracks">
-<div class="track">
-<a class="track-page" href="./">Base</a>
-<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/src/main.odin" aria-label="Base source code on GitHub" title="Base source code">Source ↗</a>
-</div>
-<div class="track is-active">
-<a class="track-page" href="./wheel30.html" aria-current="page">Wheel-30</a>
-<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin" aria-label="Wheel-30 source code on GitHub" title="Wheel-30 source code">Source ↗</a>
-</div>
-<div class="track">
-<a class="track-page" href="./wheel.html">Wheel-210</a>
-<a class="track-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel210/main.odin" aria-label="Wheel-210 source code on GitHub" title="Wheel-210 source code">Source ↗</a>
-</div>
-</div>
-<a class="nav-competition" href="./local.html">Local machine ↗</a>
-<a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a>
-</nav></header>
+<body><main class="wrapper"><header class="top">
+<div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
+<nav class="topnav" aria-label="Main navigation"><div class="tracknav">
+<a class="nav-tab" href="./">Base</a>
+<a class="nav-tab is-active" href="./wheel30.html" aria-current="page">Wheel-30</a>
+<a class="nav-tab" href="./wheel.html">Wheel-210</a>
+<a class="nav-tab" href="./local.html">Local machine</a>
+</div><a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a></nav>
+</header>
 <p class="eyebrow">WHEEL-30 · PUBLIC SINGLE-THREAD BENCHMARK</p>
 <h1>Wheel-30. <span>Measured.</span></h1>
 <p class="intro">Wheel-30 packs eight candidate residues per byte, combines periodic small-prime masks with 32-byte SIMD marking, and uses residue-specialized loops for larger factors. Every pass builds a fresh sieve. Its public CI benchmark runs one thread. <a href="./local.html">See the Intel i9 comparison with one and twenty threads ↗</a></p>
