@@ -66,14 +66,14 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <a class="nav-tab" href="./local.html">Local machine</a>
 </div><a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a></nav>
 </header>
-<p class="eyebrow">WHEEL-30 · PUBLIC SINGLE-THREAD BENCHMARK</p>
-<h1>Wheel-30. <span>Measured.</span></h1>
-<p class="intro">Wheel-30 packs eight candidate residues per byte and combines presieving with 32-byte SIMD marking. Every pass builds a fresh sieve. Results below are from its single-thread GitHub Actions benchmark.</p>
+<p class="eyebrow">WHEEL-30 · B2 SELECTED · PUBLIC CI ONLY</p>
+<h1>Wheel-30 B2. <span>CI measured.</span></h1>
+<p class="intro">B2 is the current public Wheel-30 implementation, selected from validated, same-runner CI comparisons. Its latest single-thread measurement below is generated from the public source by GitHub Actions. <strong>B2 has not yet been benchmarked on the two Intel machines in Local machine.</strong></p>
 <p class="source-link"><a href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin">View Wheel-30 source ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel30">Build notes ↗</a></p>
 <div class="status" role="status" aria-live="polite"><span class="dot" id="status-dot"></span><span id="status-label">Loading verified Wheel-30 CI…</span><a id="run-link" href="https://github.com/megaalive/odin-primes-drag/actions">CI evidence ↗</a></div>
 <section><div class="section-header"><h2>Latest GitHub Actions measurement</h2><span class="small">One thread · 1,000,000 limit · five-second pass</span></div>
 <div class="cards">
-<div class="card"><div class="label">Wheel-30 · CI throughput</div><div class="value" id="throughput">—</div><div class="unit">complete sieves per second</div></div>
+<div class="card"><div class="label">Wheel-30 B2 · public CI throughput</div><div class="value" id="throughput">—</div><div class="unit">complete sieves per second</div></div>
 <div class="card"><div class="label">Completed passes · CI</div><div class="value" id="passes">—</div><div class="unit">actual measured passes</div></div>
 <div class="card"><div class="label">GitHub runner CPU</div><div class="value" id="cpu-short" style="font-size:22px;line-height:1.35">—</div><div class="unit">Recorded on the GitHub Actions runner</div></div>
 </div>
@@ -83,9 +83,12 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 <div><div class="key">Pinned compiler</div><div class="datum" id="compiler">—</div></div>
 <div><div class="key">Build flags</div><div class="datum" id="flags">—</div></div>
 <div><div class="key">Tested revision</div><div class="datum" id="revision">—</div></div>
+<div><div class="key">Kernel / measured build</div><div class="datum" id="variant">B2 · CI selected</div></div>
+<div><div class="key">Tested source SHA-256</div><div class="datum" id="source-hash">—</div></div>
 <div><div class="key">Measurement time UTC</div><div class="datum" id="observed">—</div></div>
 </div></div>
-<p class="fineprint">Before each CI benchmark, the public source is checked against an independent reference sieve at multiple limits. This public CI entry measures one thread. The proposed <code>faithful=yes</code> classification awaits upstream review.</p>
+<p class="fineprint">Before each public benchmark, B2 is compiled and checked against an independent reference sieve at four limits. The benchmark measures one worker on a GitHub-hosted runner using <code>-microarch:native</code>. CPU differences can change its advantage. Previous B2-versus-original paired research CI found a median <strong>+16.19%</strong> across six confirmations on one runner (6/6 wins); this is a <strong>research CI result, not the throughput displayed above</strong>. It is neither an Intel local result nor an official PrimeView ranking. The proposed <code>faithful=yes</code> classification awaits upstream review.</p>
+<p class="fineprint"><a id="tested-source" href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin">Exact source for the CI record ↗</a> · <a href="./local.html">Older local original builds ↗</a></p>
 </section>
 <footer><a href="https://github.com/megaalive/odin-primes-drag">Source &amp; CI results</a> · <a href="https://plummerssoftwarellc.github.io/PrimeView/">Official PrimeView rankings</a></footer>
 </main><script>
@@ -102,6 +105,8 @@ async function loadCI(){
   show("cpu-short",d.host.cpu_model);show("cpu",d.host.cpu_model);
   show("affinity",d.host.logical_cpus+" / "+d.host.affinity_cpus);
   show("compiler",d.compiler);show("flags",d.build_flags);show("revision",d.commit.slice(0,12));
+   show("variant",d.build_variant || "B2 · CI selected");show("source-hash",d.source_sha256 || "Not reported");
+   if(/^[0-9a-f]{40}$/.test(d.commit))el("tested-source").href="https://github.com/megaalive/odin-primes-drag/blob/"+d.commit+"/wheel30/main.odin";
   show("observed",new Date(d.measured_at_utc).toLocaleString("en-US",{timeZone:"UTC"})+" UTC");
   el("run-link").href="https://github.com/megaalive/odin-primes-drag/actions/runs/"+encodeURIComponent(d.run_id);
   el("status-dot").className="dot ok";show("status-label","Verified GitHub Actions Wheel-30 measurement");

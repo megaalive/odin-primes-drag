@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark"><title>Local machine · Odin Primes</title>
-<meta name="description" content="Intel i9-12900H comparison of Base, Wheel-30 and Wheel-210: one and twenty threads.">
+<meta name="description" content="Historical 11 October 2026 local benchmarks with exact pinned Base E22, original Wheel-30 and Wheel-210 builds, separate from newer CI-only Wheel-30 B2.">
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
@@ -61,6 +61,12 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 .host-option.is-selected{border-color:#75b9de;background:#1c384f}
 .host-option:focus-visible{outline:2px solid #81d7f6;outline-offset:3px}
 .xeon-unavailable{margin-top:20px;border-color:#39536d}
+.build-history{margin-top:32px}.build-history .section-header{margin:0 0 14px}
+.build-note{border-color:#426178}.build-note>strong{font-size:15px;line-height:1.5}
+.build-note .fineprint{max-width:none}.build-note .tablewrap{margin:18px 0}
+.build-table{min-width:700px}.build-table th:not(:first-child),.build-table td:not(:first-child){text-align:left}
+.build-table th,.build-table td{white-space:normal}.build-hash{display:block;color:#8da4b8;font-size:11px;margin-top:6px;overflow-wrap:anywhere}
+.build-note code{overflow-wrap:anywhere}
 .xeon-unavailable p{margin:8px 0 0}
 @media(max-width:600px){.host-switch{grid-template-columns:1fr}.host-option{padding:12px 15px}}
 
@@ -93,19 +99,33 @@ details{margin-top:22px}summary{cursor:pointer;color:#aedcff;font-size:13px}
 <a class="nav-tab is-active" href="./local.html" aria-current="page">Local machine</a>
 </div><a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a></nav>
 </header>
-<p class="eyebrow">LOCAL MACHINE · TWO PROCESSORS</p>
+<p class="eyebrow">LOCAL MACHINE · HISTORICAL BUILDS · TWO PROCESSORS</p>
 <h1>Three sieves. <span>Two machines.</span></h1>
-<p class="intro">Explore the same Base, Wheel-30 and Wheel-210 implementations on two Windows computers. Select a machine to see its actual worker count, throughput and test conditions. GitHub Actions results remain on the algorithm pages.</p>
+<p class="intro">Compare the <strong>11 October 2026 original builds</strong> on two Windows machines. These are historical measurements: the newer Wheel-30 B2 build is <strong>CI-tested only</strong> and is not included in either local chart.</p>
+<section class="build-history" aria-labelledby="builds-title">
+<div class="section-header"><h2 id="builds-title">Which builds were actually tested?</h2><span class="small">Pinned 11 October 2026 snapshot · both Intel machines</span></div>
+<div class="panel build-note">
+<strong>These charts are historical baseline measurements — not the current Wheel-30 B2 build.</strong>
+<p class="fineprint">Both machines measured the exact source revision <a href="https://github.com/megaalive/odin-primes-drag/commit/af227f9fbe9278ec02b16f0ddbc38febd432abab"><code>af227f9</code></a>, with Odin <code>dev-2026-10-nightly:84bc3fc</code>, LLVM 20.1.0 and <code>-o:speed -microarch:native -no-bounds-check -disable-assert</code>. The selected Wheel-30 B2 was promoted later from GitHub-hosted CI results and <strong>has no i9-12900H or Xeon W-1350P local result yet</strong>.</p>
+<div class="tablewrap"><table class="table build-table">
+<thead><tr><th>Track in charts</th><th>Measured build</th><th>Exact tested source</th><th>Current status</th></tr></thead>
+<tbody>
+<tr><td>Base</td><td>E22 · original local build</td><td><a href="https://github.com/megaalive/odin-primes-drag/blob/af227f9fbe9278ec02b16f0ddbc38febd432abab/src/main.odin">Pinned Base source ↗</a><span class="build-hash">SHA-256 fa701f195499…</span></td><td>Same Base track</td></tr>
+<tr><td>Wheel-30</td><td><strong>Original, pre-B2</strong></td><td><a href="https://github.com/megaalive/odin-primes-drag/blob/af227f9fbe9278ec02b16f0ddbc38febd432abab/wheel30/main.odin">Pinned original source ↗</a><span class="build-hash">SHA-256 75cfe0048f63…</span></td><td><strong>Superseded for CI by B2</strong></td></tr>
+<tr><td>Wheel-210</td><td>E49-W1 · original local build</td><td><a href="https://github.com/megaalive/odin-primes-drag/blob/af227f9fbe9278ec02b16f0ddbc38febd432abab/wheel210/main.odin">Pinned Wheel-210 source ↗</a><span class="build-hash">SHA-256 1f7648c57b22…</span></td><td>Same Wheel-210 track</td></tr>
+</tbody></table></div>
+<p class="fineprint">The two machine selectors below change the CPU and measured worker counts; they <strong>do not</strong> change the tested source revision. For current Wheel-30 B2 builds, source SHA and latest CI throughput, visit <a href="./wheel30.html">Wheel-30 · B2 CI ↗</a>. No extrapolated B2 local throughput is shown.</p>
+</div></section>
 <div class="host-switch" role="tablist" aria-label="Local benchmark machine">
 <button type="button" class="host-option is-selected" role="tab" id="tab-i9" aria-selected="true" aria-controls="host-i9" data-host="i9"><strong>Core i9-12900H</strong><span>14 cores · 20 logical processors</span></button>
 <button type="button" class="host-option" role="tab" id="tab-xeon" aria-selected="false" aria-controls="host-xeon" data-host="xeon" tabindex="-1"><strong>Xeon W-1350P</strong><span>6 cores · 12 logical processors</span></button>
 </div>
 <div id="host-i9" role="tabpanel" aria-labelledby="tab-i9"><div class="pills"><span>Windows 11</span><span>Odin dev-2026-10</span><span>1,000,000 limit</span><span>5 seconds per run</span></div>
 <div class="jump"><a href="#single">1 thread ↓</a><a href="#multi">20 threads ↓</a><a href="#method">How it was tested ↓</a></div>
-<section id="single" aria-labelledby="single-title"><div class="section-header"><h2 id="single-title">Single-thread</h2><span class="small">6 confirmation blocks · one worker</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">27,417.60 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 27,417.60 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 0.75% · 6 runs</div></div>
+<section id="single" aria-labelledby="single-title"><div class="section-header"><h2 id="single-title">Single-thread</h2><span class="small">6 confirmation blocks · one worker</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30 original</strong><strong class="numeric">27,417.60 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 27,417.60 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 0.75% · 6 runs</div></div>
 <div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">24,108.04 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 24,108.04 passes per second"><div class="bar-fill " style="width:87.93%"></div></div><div class="bar-sub">Variation (CV): 1.54% · 6 runs</div></div>
 <div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">12,076.00 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 12,076.00 passes per second"><div class="bar-fill " style="width:44.04%"></div></div><div class="bar-sub">Variation (CV): 0.73% · 6 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">13.22% <span>higher throughput</span></div><p>Wheel-30 led in <strong>6/6 blocks</strong>.</p><p class="fineprint">Median of block-by-block ratios.</p></aside></div></section>
-<section id="multi" aria-labelledby="multi-title"><div class="section-header"><h2 id="multi-title">Multi-thread</h2><span class="small">7 paired blocks · twenty workers</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">125,314.62 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 125,314.62 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 1.77% · 7 runs</div></div>
+<section id="multi" aria-labelledby="multi-title"><div class="section-header"><h2 id="multi-title">Multi-thread</h2><span class="small">7 paired blocks · twenty workers</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30 original</strong><strong class="numeric">125,314.62 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 125,314.62 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 1.77% · 7 runs</div></div>
 <div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">85,884.87 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 85,884.87 passes per second"><div class="bar-fill " style="width:68.54%"></div></div><div class="bar-sub">Variation (CV): 2.19% · 7 runs</div></div>
 <div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">48,063.93 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 48,063.93 passes per second"><div class="bar-fill " style="width:38.35%"></div></div><div class="bar-sub">Variation (CV): 2.02% · 7 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">46.54% <span>higher throughput</span></div><p>Wheel-30 led in <strong>7/7 blocks</strong>.</p><p class="fineprint">Median of block-by-block ratios.</p></aside></div></section>
 <section id="method"><div class="section-header"><h2>How it was tested</h2><span class="small">11 October 2026</span></div>

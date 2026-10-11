@@ -2,7 +2,7 @@
 """Validate official Wheel-30 output and record public CI hardware provenance."""
 import argparse
 from datetime import datetime, timezone
-import json, math, os, re
+import hashlib, json, math, os, re
 from pathlib import Path
 from ci_report import cpu_snapshot
 
@@ -46,7 +46,9 @@ def build_record(output,version,sha,run_id,host):
         "compiler":version.strip().removeprefix("odin version "),
         "compiler_archive_sha256":"c3c8b095621fd0c75f7f73e3a0829f1b4d45324225f20ba11ed8dc4da310a8ab",
         "build_flags":"-o:speed -microarch:native -no-bounds-check -disable-assert",
-        "source_path":"wheel30/main.odin","host":host,"lanes":lanes
+        "source_path":"wheel30/main.odin","source_sha256":hashlib.sha256(Path("wheel30/main.odin").read_bytes()).hexdigest(),
+        "build_variant":"Wheel-30 B2 (CI-selected)","local_status":"not measured on i9-12900H or Xeon W-1350P",
+        "host":host,"lanes":lanes
     }
 
 def main():

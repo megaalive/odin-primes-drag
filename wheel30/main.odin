@@ -79,6 +79,38 @@ mark_big :: #force_inline proc "contextless" ($R: int, a: int, arr: [^]u8, nbyte
 	}
 }
 
+// Fuse two discovered small factors into one runtime-generated periodic mask.
+// Both flags are inspected in the current sieve before using this fast path.
+blit_pair :: proc "contextless" ($P: int, $Q: int, arr: [^]u8, nbytes: int, E: [^]u8) {
+	PERIOD :: P * Q
+	LP :: VW * PERIOD
+	mem.zero(E, PERIOD)
+	for p in ([2]int{P, Q}) {
+		for c in CLASS {
+			n := p * c
+			m := BIT_TAB[n % 30]
+			for x := n / 30; x < PERIOD; x += p {
+				E[x] |= m
+			}
+		}
+	}
+	filled := PERIOD
+	for filled < LP {
+		n := min(filled, LP - filled)
+		mem.copy(E[filled:], E, n)
+		filled += n
+	}
+	for blk := 0; blk < nbytes; blk += LP {
+		for i := 0; i < LP; i += VW {
+			pa := (^Vec)(arr[blk + i:])
+			pe := (^Vec)(E[i:])
+			pa^ |= pe^
+		}
+	}
+	arr[P / 30] &~= BIT_TAB[P % 30]
+	arr[Q / 30] &~= BIT_TAB[Q % 30]
+}
+
 // Pola periodik 7*11*13 (1001 byte), digandakan ke seluruh array.
 init_pattern :: proc "contextless" (arr: [^]u8, nbytes: int) {
 	PERIOD :: 7 * 11 * 13
@@ -126,6 +158,8 @@ blit_prime :: proc "contextless" (arr: [^]u8, nbytes: int, p: int, E: [^]u8) {
 
 run_sieve :: proc(s: ^Sieve) {
 	arr := s.arr
+	paired_17_19 := false
+	paired_23_29 := false
 	init_pattern(arr, NBYTES)
 	arr[7 / 30] &~= BIT_TAB[7 % 30]
 	arr[11 / 30] &~= BIT_TAB[11 % 30]
@@ -137,7 +171,22 @@ run_sieve :: proc(s: ^Sieve) {
 			n := 30 * a + r
 			if n < 17 {continue}
 			if n * n > LIMIT {break outer}
+			if n == 19 && paired_17_19 {continue}
+			if n == 29 && paired_23_29 {continue}
 			if arr[a] & BIT_TAB[r] != 0 {continue}
+			// The sieve already establishes both 17 and 19 as prime here:
+			// striking 17 cannot change the flag for 19.
+			if n == 17 && P_CUT > 19 && 19 * 19 <= LIMIT && arr[19 / 30] & BIT_TAB[19 % 30] == 0 {
+				blit_pair(17, 19, arr, NBYTES, s.pat)
+				paired_17_19 = true
+				continue
+			}
+			// Both factors are still discovered from this pass's own sieve.
+			if n == 23 && P_CUT > 29 && 29 * 29 <= LIMIT && arr[29 / 30] & BIT_TAB[29 % 30] == 0 {
+				blit_pair(23, 29, arr, NBYTES, s.pat)
+				paired_23_29 = true
+				continue
+			}
 			if n < P_CUT {
 				blit_prime(arr, NBYTES, n, s.pat)
 			} else {
@@ -188,7 +237,7 @@ is_prime :: proc(s: ^Sieve, n: int) -> bool {
 
 new_sieve :: proc() -> Sieve {
 	s: Sieve
-	s.buf = mem.alloc_bytes_non_zeroed(NBYTES + SLACK + VW * P_CUT + 256, 64) or_else nil
+	s.buf = mem.alloc_bytes_non_zeroed(NBYTES + SLACK + max(VW * P_CUT, VW * 23 * 29) + 256, 64) or_else nil
 	s.arr = raw_data(s.buf)
 	s.pat = raw_data(s.buf)[(NBYTES + SLACK + 63) &~ 63:]
 	return s

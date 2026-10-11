@@ -11,6 +11,8 @@ class Wheel30CITests(unittest.TestCase):
         self.assertEqual(record["source"],"github-actions")
         self.assertEqual(record["lanes"][0]["workers"],1)
         self.assertEqual(len(record["lanes"]),1)
+        self.assertEqual(record["build_variant"],"Wheel-30 B2 (CI-selected)")
+        self.assertEqual(len(record["source_sha256"]),64)
     def test_missing(self):
         with self.assertRaises(ValueError):parse("")
     def test_duplicate(self):
