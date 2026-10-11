@@ -25,7 +25,7 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
-              "wheel.html", "wheel30.html", "local.html", "local-i9-12900h.json", "wheel210-reported.json", "base-intel12900h.json",
+              "wheel.html", "wheel30.html", "local.html", "local-i9-12900h.json", "local-xeon-w-1350p.json", "wheel210-reported.json", "base-intel12900h.json",
               "wheel210/Dockerfile", "wheel210/README.md",
               "wheel210/main.odin", "wheel210/tests.odin",
               "wheel30/Dockerfile", "wheel30/README.md", "wheel30/main.odin",
@@ -57,6 +57,40 @@ jobs:
           assert all(x['passes']>0 and x['seconds']>=5 for x in d['lanes'])
           assert 'Developer-provided' in d['evidence'] and 'pending' in d['evidence']
           print('Wheel track is correctly labeled as reported, not CI-verified.')
+          PY
+      - name: Validate Xeon local summary and machine separation
+        run: |
+          python3 - <<'PY'
+          import json
+          import math
+          import statistics
+          from pathlib import Path
+
+          xeon=json.loads(Path("local-xeon-w-1350p.json").read_text())
+          i9=json.loads(Path("local-i9-12900h.json").read_text())
+          assert xeon["machine_id"]=="xeon-w-1350p"
+          assert xeon["source"]=="local-machine" and xeon["audit"]["status"]=="PASS"
+          assert xeon["host"]["logical_processors"]==12
+          assert xeon["provenance"]["git_commit"]==i9["provenance"]["git_commit"]
+          assert xeon["provenance"]["source_sha256"]==i9["provenance"]["source_sha256"]
+          assert xeon["measurements"]["multi"]["status"]=="unavailable"
+          assert xeon["measurements"]["multi"]["blocks"]==0
+          assert xeon["measurements"]["multi"]["samples"]==[]
+          assert i9["measurements"]["multi"]["workers"]==20
+          for field,workers,blocks in [("single",1,6),("optional_multi12",12,7)]:
+              group=xeon["measurements"][field]
+              assert group["workers"]==workers and group["blocks"]==blocks
+              assert len(group["samples"])==blocks
+              for track in ("base","wheel30","wheel210"):
+                  throughput=[b["values"][track]["passes_per_second"] for b in group["samples"]]
+                  assert math.isclose(statistics.median(throughput), group["tracks"][track]["median"],rel_tol=1e-9)
+                  assert all(v>0 and math.isfinite(v) for v in throughput)
+              ratios=[b["values"]["wheel30"]["passes_per_second"]/b["values"]["wheel210"]["passes_per_second"] for b in group["samples"]]
+              pair=group["pairs"]["wheel30/wheel210"]
+              assert math.isclose(statistics.median(ratios),pair["median_ratio"],rel_tol=1e-9)
+              assert pair["wins"]==sum(x>1 for x in ratios)
+          assert xeon["correctness"]["primes_at_one_million"]==78498
+          print("Xeon publication record PASS: 1/12 workers, 20-worker lane unavailable.")
           PY
       - name: Build pinned Odin compiler and benchmark
         run: docker build --target build -t odin-primes:build .
@@ -231,7 +265,7 @@ jobs:
           path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel30.html local.html local-i9-12900h.json site/
+          cp index.html wheel.html wheel30.html local.html local-i9-12900h.json local-xeon-w-1350p.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -52,6 +52,18 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 .source-link a{display:inline-flex;gap:6px;align-items:center;color:#95d3f6}
 @media(max-width:760px){.topnav{width:100%;gap:7px}.tracknav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.nav-tab{min-width:0}.nav-competition{padding:6px 3px}}
 
+
+.host-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:760px;margin:28px 0 10px}
+.host-option{font:inherit;text-align:left;background:#0d1d2d;border:1px solid #344d64;border-radius:12px;padding:16px 18px;color:#b7cddd;cursor:pointer;min-width:0}
+.host-option strong{display:block;font-size:16px;line-height:1.4;color:#ebf4ff}
+.host-option span{display:block;font-size:12px;color:#91aabe;margin-top:5px}
+.host-option:hover{background:#182d42}
+.host-option.is-selected{border-color:#75b9de;background:#1c384f}
+.host-option:focus-visible{outline:2px solid #81d7f6;outline-offset:3px}
+.xeon-unavailable{margin-top:20px;border-color:#39536d}
+.xeon-unavailable p{margin:8px 0 0}
+@media(max-width:600px){.host-switch{grid-template-columns:1fr}.host-option{padding:12px 15px}}
+
 </style>
 <style>
 .compare-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(220px,1fr);gap:34px;align-items:start}
@@ -81,10 +93,14 @@ details{margin-top:22px}summary{cursor:pointer;color:#aedcff;font-size:13px}
 <a class="nav-tab is-active" href="./local.html" aria-current="page">Local machine</a>
 </div><a class="nav-competition" href="https://github.com/PlummersSoftwareLLC/Primes">Competition ↗</a></nav>
 </header>
-<p class="eyebrow">LOCAL MACHINE · INTEL CORE i9-12900H</p>
-<h1>Three sieves. <span>One machine.</span></h1>
-<p class="intro">Base, Wheel-30 and Wheel-210 measured sequentially on the same Windows laptop. Results from this <strong>local machine</strong> are separate from GitHub Actions measurements on the algorithm pages.</p>
-<div class="pills"><span>Windows 11</span><span>Odin dev-2026-10</span><span>1,000,000 limit</span><span>5 seconds per run</span></div>
+<p class="eyebrow">LOCAL MACHINE · TWO PROCESSORS</p>
+<h1>Three sieves. <span>Two machines.</span></h1>
+<p class="intro">Explore the same Base, Wheel-30 and Wheel-210 implementations on two Windows computers. Select a machine to see its actual worker count, throughput and test conditions. GitHub Actions results remain on the algorithm pages.</p>
+<div class="host-switch" role="tablist" aria-label="Local benchmark machine">
+<button type="button" class="host-option is-selected" role="tab" id="tab-i9" aria-selected="true" aria-controls="host-i9" data-host="i9"><strong>Core i9-12900H</strong><span>14 cores · 20 logical processors</span></button>
+<button type="button" class="host-option" role="tab" id="tab-xeon" aria-selected="false" aria-controls="host-xeon" data-host="xeon" tabindex="-1"><strong>Xeon W-1350P</strong><span>6 cores · 12 logical processors</span></button>
+</div>
+<div id="host-i9" role="tabpanel" aria-labelledby="tab-i9"><div class="pills"><span>Windows 11</span><span>Odin dev-2026-10</span><span>1,000,000 limit</span><span>5 seconds per run</span></div>
 <div class="jump"><a href="#single">1 thread ↓</a><a href="#multi">20 threads ↓</a><a href="#method">How it was tested ↓</a></div>
 <section id="single" aria-labelledby="single-title"><div class="section-header"><h2 id="single-title">Single-thread</h2><span class="small">6 confirmation blocks · one worker</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">27,417.60 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 27,417.60 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 0.75% · 6 runs</div></div>
 <div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">24,108.04 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 24,108.04 passes per second"><div class="bar-fill " style="width:87.93%"></div></div><div class="bar-sub">Variation (CV): 1.54% · 6 runs</div></div>
@@ -108,5 +124,56 @@ details{margin-top:22px}summary{cursor:pointer;color:#aedcff;font-size:13px}
 <tr><td>7</td><td>48,595</td><td>123,397</td><td>84,206</td></tr>
 </tbody></table></div></details>
 <p class="fineprint"><a href="./local-i9-12900h.json">Per-block data and provenance (JSON) ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/commit/af227f9fbe9278ec02b16f0ddbc38febd432abab">Source revision tested ↗</a></p></section>
+</div>
+<div id="host-xeon" role="tabpanel" aria-labelledby="tab-xeon" hidden><div class="pills"><span>Windows 11 Pro for Workstations</span><span>6 cores / 12 logical processors</span><span>Odin dev-2026-10</span><span>1,000,000 limit</span></div>
+<section id="xeon-single"><div class="section-header"><h2>Single-thread</h2><span class="small">6 paired blocks · 1 worker</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">25,512.50 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 25,512.50 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 1.00% · 6 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">24,235.59 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 24,235.59 passes per second"><div class="bar-fill " style="width:94.99%"></div></div><div class="bar-sub">Variation (CV): 4.51% · 6 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">13,864.83 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 13,864.83 passes per second"><div class="bar-fill " style="width:54.35%"></div></div><div class="bar-sub">Variation (CV): 1.31% · 6 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">5.24% <span>higher throughput</span></div><p>Wheel-30 led in <strong>6/6 blocks</strong>.</p><p class="fineprint">Median of within-block ratios.</p></aside></div></section>
+<section id="xeon-multi"><div class="section-header"><h2>Multi-thread · 12 workers</h2><span class="small">7 paired blocks · all 12 available logical processors</span></div><div class="panel compare-grid"><div class="bars"><div class="bar-row"><div class="bar-head"><strong>Wheel-30</strong><strong class="numeric">129,123.63 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-30: 129,123.63 passes per second"><div class="bar-fill accent" style="width:100.00%"></div></div><div class="bar-sub">Variation (CV): 2.37% · 7 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Wheel-210</strong><strong class="numeric">118,860.61 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Wheel-210: 118,860.61 passes per second"><div class="bar-fill " style="width:92.05%"></div></div><div class="bar-sub">Variation (CV): 2.39% · 7 runs</div></div>
+<div class="bar-row"><div class="bar-head"><strong>Base E22</strong><strong class="numeric">72,312.46 <small>passes/s</small></strong></div><div class="bar-bg" role="img" aria-label="Base E22: 72,312.46 passes per second"><div class="bar-fill " style="width:56.00%"></div></div><div class="bar-sub">Variation (CV): 1.74% · 7 runs</div></div></div><aside class="aside-result"><div class="overline">Wheel-30 vs Wheel-210</div><div class="advantage">9.09% <span>higher throughput</span></div><p>Wheel-30 led in <strong>7/7 blocks</strong>.</p><p class="fineprint">Median of within-block ratios.</p></aside></div></section>
+<div class="panel xeon-unavailable"><strong>20-thread result: unavailable</strong><p class="fineprint">This Xeon exposes 12 usable logical processors. We did not oversubscribe it to imitate the i9's 20-worker test. The i9's 20-thread and Xeon's 12-thread charts are separate measurements.</p></div>
+<section><div class="section-header"><h2>Xeon test details</h2><span class="small">11 October 2026 · audit PASS</span></div>
+<div class="facts"><div class="fact"><span>CPU</span><strong>Intel Xeon W-1350P</strong><span>6 cores · 12 logical processors</span></div>
+<div class="fact"><span>Compiler</span><strong>Odin dev-2026-10</strong><span>LLVM 20.1.0 · host-native build</span></div>
+<div class="fact"><span>Correctness</span><strong>78,498 primes · PASS</strong><span>Independent oracle and 12-worker concurrency checks</span></div></div>
+<p class="fineprint">All three algorithms used the same compiler and flags with their original kernels. Six single-worker blocks and seven 12-worker shared-window blocks were measured on this Xeon. A separate eight-check audit passed. The machine reports VBS/hypervisor presence; temperature and throttle telemetry were unavailable. Results should be compared within this machine, not interpreted as a controlled race between different CPUs.</p>
+<details><summary>Show all seven 12-thread blocks</summary><div class="panel tablewrap" style="margin-top:14px"><table class="table"><thead><tr><th>Block</th><th>Base E22</th><th>Wheel-30</th><th>Wheel-210</th></tr></thead><tbody><tr><td>1</td><td>72,545</td><td>130,681</td><td>117,965</td></tr>
+<tr><td>2</td><td>72,792</td><td>128,098</td><td>119,859</td></tr>
+<tr><td>3</td><td>72,312</td><td>129,124</td><td>121,066</td></tr>
+<tr><td>4</td><td>73,404</td><td>126,742</td><td>118,861</td></tr>
+<tr><td>5</td><td>70,530</td><td>131,569</td><td>119,012</td></tr>
+<tr><td>6</td><td>69,924</td><td>122,703</td><td>112,473</td></tr>
+<tr><td>7</td><td>71,880</td><td>130,587</td><td>116,400</td></tr></tbody></table></div></details>
+<p class="fineprint"><a href="./local-xeon-w-1350p.json">View measured samples and provenance (JSON) ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/commit/af227f9fbe9278ec02b16f0ddbc38febd432abab">Source revision tested ↗</a></p>
+</section></div>
 <footer><a href="./">Base</a> · <a href="./wheel30.html">Wheel-30</a> · <a href="./wheel.html">Wheel-210</a> · <a href="https://github.com/megaalive/odin-primes-drag">GitHub source</a></footer>
-</main></body></html>
+</main><script>
+"use strict";
+(() => {
+ const tabs=[...document.querySelectorAll(".host-option")];
+ const sections={i9:document.getElementById("host-i9"),xeon:document.getElementById("host-xeon")};
+ const select=(id,focus=false) => {
+  if(!sections[id])return;
+  for(const tab of tabs){
+   const active=tab.dataset.host===id;
+   tab.classList.toggle("is-selected",active);
+   tab.setAttribute("aria-selected",active?"true":"false");
+   tab.tabIndex=active?0:-1;
+   if(active&&focus)tab.focus();
+  }
+  for(const [key,node] of Object.entries(sections))node.hidden=key!==id;
+ };
+ for(let i=0;i<tabs.length;i++){
+  const tab=tabs[i];
+  tab.addEventListener("click",()=>select(tab.dataset.host));
+  tab.addEventListener("keydown",e=>{
+   if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;
+   e.preventDefault();
+   const next=e.key==="Home"?0:e.key==="End"?tabs.length-1:(i+(e.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length;
+   select(tabs[next].dataset.host,true);
+  });
+ }
+ if(new URLSearchParams(location.search).get("machine")==="xeon")select("xeon");
+})();
+</script></body></html>

@@ -51,6 +51,11 @@ Wheel-30 has its own [public dashboard](https://megaalive.github.io/odin-primes-
 
 Wheel-30 joins Base and Wheel-210 as a complementary Odin algorithm; all three pursue the same non-Odin competitors.
 
-## Local machine — three-way i9-12900H comparison
+## Local machine — two CPU profiles
 
-The [local machine dashboard](https://megaalive.github.io/odin-primes-drag/local.html) compares **Base E22, Wheel-30 and Wheel-210** on one Intel Core i9-12900H under Odin dev-2026-10. Single-thread confirmation used 6 paired blocks; 20-thread shared-window testing used 7 blocks. Verified prime counts and raw per-block aggregate measurements are in [`local-i9-12900h.json`](local-i9-12900h.json). Full CSV, report, audit and the research multi-thread runner are in the private lab. This is not GitHub Actions or PrimeView; the original Wheel-30 public competition executable remains single-thread.
+The [Local machine dashboard](https://megaalive.github.io/odin-primes-drag/local.html) offers two selectable profiles for Base E22, Wheel-30 and Wheel-210:
+
+- **Intel Core i9-12900H**: Windows 11, 14 cores / 20 logical processors, six single-worker confirmation blocks and seven 20-worker shared-window blocks; data in [`local-i9-12900h.json`](local-i9-12900h.json).
+- **Intel Xeon W-1350P**: Windows 11 Pro for Workstations, 6 cores / **12 usable logical processors**, six single-worker blocks and seven optional 12-worker shared-window blocks; data in [`local-xeon-w-1350p.json`](local-xeon-w-1350p.json). The 20-worker Xeon lane is **unavailable** and intentionally not synthesized.
+
+Both used Odin `dev-2026-10-nightly:84bc3fc`, identical original sieve kernels and independent correctness checks. Wheel-30's multithreaded local run uses the research harness; its official public CI executable remains single-thread. **Each machine's results are reported separately**; i9's 20-worker numbers and Xeon's 12-worker numbers are not a same-worker paired comparison. Private research notes and audits contain further details. No local result is an official PrimeView ranking.
