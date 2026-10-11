@@ -15,4 +15,4 @@ docker run --rm wheel30:build sh -lc 'odin build main.odin -file -o:speed -micro
 
 The Odin dev-2026-10 compiler archive is checksum-pinned. GitHub Actions performs independent oracle tests at 100, 10000, 1000000, and 10000000, and a five-second single-thread benchmark. There is no multithreaded Wheel-30 lane.
 
-Developer-reported Intel Xeon comparisons are stored separately in [wheel30-reported.json](../wheel30-reported.json). Rust #1092 used a non-matching compiler; Zig #1090/#1094 was not tested. These numbers are not an official PrimeView ranking.
+The public Wheel-30 dashboard presents **GitHub Actions measurements only** (including runner CPU, compiler and source provenance). This is CI screening, not a certified PrimeView result. Any local comparisons belong in the private research laboratory.

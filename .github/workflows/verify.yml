@@ -25,7 +25,7 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
-              "wheel.html", "wheel30.html", "wheel210-reported.json", "wheel30-reported.json", "base-intel12900h.json",
+              "wheel.html", "wheel30.html", "wheel210-reported.json", "base-intel12900h.json",
               "wheel210/Dockerfile", "wheel210/README.md",
               "wheel210/main.odin", "wheel210/tests.odin",
               "wheel30/Dockerfile", "wheel30/README.md", "wheel30/main.odin",
@@ -231,7 +231,7 @@ jobs:
           path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel30.html wheel210-reported.json wheel30-reported.json base-intel12900h.json site/
+          cp index.html wheel.html wheel30.html wheel210-reported.json base-intel12900h.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

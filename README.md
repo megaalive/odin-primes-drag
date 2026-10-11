@@ -31,7 +31,7 @@ Based on the Odin prime-sieve community work credited to omgitsmoe, Ginger Bill,
 
 ## Complementary Odin strategies
 
-**Base** and **Wheel-210** are independent Odin algorithm tracks with a common objective: outperform the fastest non-Odin entries in the [Prime Sieve Drag Race](https://github.com/PlummersSoftwareLLC/Primes). Their internal measurements do not establish a common category winner or a cross-CPU leaderboard. Both have separate CI and correctness checks.
+**Base**, **Wheel-210**, and **Wheel-30** are independent Odin algorithm tracks with a common objective: outperform the fastest non-Odin entries in the [Prime Sieve Drag Race](https://github.com/PlummersSoftwareLLC/Primes). Their internal measurements do not establish a common category winner or a cross-CPU leaderboard. All three have separate CI and correctness checks.
 
 **Base compiler compatibility:** The public Base source includes `#+feature using-stmt` in the two files that use the feature, matching Odin `dev-2026-10`. The public Base Dockerfile now verifies the checksum-pinned October compiler, keeping parity with the Wheel-210 toolchain. The experimental E22 kernel and sieve logic are unchanged; the private historical compiler pin and research baseline are independent.
 
@@ -48,6 +48,6 @@ Wheel-210 lives in [`wheel210/`](wheel210/) alongside the Base implementation. I
 
 ## Wheel-30 — third independent algorithm
 
-Wheel-30 has its own [public dashboard](https://megaalive.github.io/odin-primes-drag/wheel30.html), [source](wheel30/main.odin), [Dockerfile](wheel30/Dockerfile), [build notes](wheel30/README.md), and a checksum-pinned GitHub CI job. It runs a **single-thread** lane, checked against an independent oracle at multiple limits before the timed pass. The public [developer-reported Intel Xeon duel](wheel30-reported.json) is clearly separate from public CI measurements and official PrimeView rankings.
+Wheel-30 has its own [public dashboard](https://megaalive.github.io/odin-primes-drag/wheel30.html), [source](wheel30/main.odin), [Dockerfile](wheel30/Dockerfile), [build notes](wheel30/README.md), and checksum-pinned GitHub CI validation. It runs **one single-thread lane** with an independent prime-membership oracle at four limits before the five-second benchmark. The dashboard publishes only verified GitHub Actions measurements with recorded runner CPU, compiler provenance and source revision. No local cross-language measurements are published for Wheel-30. The run is CI screening, not an official PrimeView ranking, and proposed `faithful=yes` remains subject to upstream review.
 
-The user reported approximately five-second single-thread passes of Wheel-30 105302, Rust PR #1092 87166, assembly PR #1093 86413, C solution_5 60659, and C solution_2 29946. Rust used a different compiler than specified by the PR, Zig PRs were not benchmarked and the exact Intel Xeon model and raw logs were not supplied. These are useful local experimental observations, **not proof of universal victory or a verified official leaderboard**. Wheel-30 joins Base and Wheel-210 as a complementary Odin strategy.
+Wheel-30 joins Base and Wheel-210 as a complementary Odin algorithm; all three pursue the same non-Odin competitors.

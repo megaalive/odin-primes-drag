@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark"><title>Wheel-30 · Odin Primes</title>
-<meta name="description" content="Odin Wheel-30 public single-thread CI and distinctly labeled developer-reported local duel.">
+<meta name="description" content="Odin Wheel-30 public single-thread benchmark and verified GitHub Actions runner metadata.">
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0a1018;color:#eef3fc}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 88% 0%,#162c43 0%,transparent 40%),#0a1018}
@@ -45,7 +45,7 @@ h2{font-size:18px;margin:0;letter-spacing:-.015em}.small{font-size:12px;color:#9
 footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6bb;font-size:13px;line-height:1.7}
 @media(max-width:720px){.wrapper{padding:20px 16px 48px}.eyebrow{margin-top:36px}.cards{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.card{padding:18px}.panel{padding:17px}}
 </style>
-<style>.table{min-width:530px}.report-tag{border:1px solid #315272;border-radius:9px;padding:6px 10px;color:#a4d6ff;font-size:12px}</style></head>
+</head>
 <body><main class="wrapper"><header class="top"><div class="wordmark"><span class="symbol" aria-hidden="true">ᛟ</span><span>ODIN / PRIMES</span></div>
 <nav class="topnav" aria-label="Benchmark tracks and code">
 <div class="tracknav" aria-label="Algorithm tracks">
@@ -84,17 +84,8 @@ footer{border-top:1px solid #253345;margin-top:46px;padding-top:24px;color:#8fa6
 </div></div>
 <p class="fineprint">The exact public source is checked against an independent oracle at multiple limits before CI benchmarking. No Wheel-30 parallel lane exists in the uploaded implementation. Proposed <code>algorithm=wheel,faithful=yes,bits=1</code> classification awaits upstream review.</p>
 </section>
-<section><div class="section-header"><h2>Reported local Intel Xeon duel</h2><span class="report-tag">Developer-provided · not CI</span></div>
-<p class="fineprint" id="local-note">Loading reported results…</p>
-<div class="panel tablewrap"><table class="table">
-<thead><tr><th>Implementation</th><th>Passes / reported 5 seconds</th><th>Odin / opponent</th></tr></thead>
-<tbody id="local-rows"><tr><td colspan="3">Local measurements not available</td></tr></tbody>
-</table></div>
-<p class="fineprint"><strong>Evidence limitations:</strong> exact Xeon SKU, raw run logs, and full thermal controls were not supplied. Rust PR #1092 was built using Rust 1.75 with nightly flags instead of its specified 1.99 toolchain; Zig PRs #1090 and #1094 were not tested. This is not an official PrimeView ranking, and no universal victory against non-Odin is claimed.</p>
-<p class="fineprint"><a href="./wheel30-reported.json">Developer-reported data JSON ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/blob/main/wheel30/main.odin">Public source ↗</a> · <a href="https://github.com/megaalive/odin-primes-drag/tree/main/wheel30">Dockerfile and build notes ↗</a></p>
-</section>
 <section><div class="section-header"><h2>Three Odin approaches</h2></div><p class="fineprint"><a href="./">Base</a> uses an odd-only packed-bit sieve, <a href="./wheel.html">Wheel-210</a> packs 48 candidates per 64-bit block, and Wheel-30 stores eight residues per byte. Their evidence and CI categories are kept distinct. Official results: <a href="https://plummerssoftwarellc.github.io/PrimeView/">PrimeView</a>.</p></section>
-<footer>Source and validation on <a href="https://github.com/megaalive/odin-primes-drag">GitHub</a>. CI results and local developer reports are never combined into one leaderboard.</footer>
+<footer>Source and validation on <a href="https://github.com/megaalive/odin-primes-drag">GitHub</a>. Only independently validated GitHub Actions evidence is displayed for Wheel-30; this is not the official leaderboard.</footer>
 </main><script>
 "use strict";
 const el=id=>document.getElementById(id);
@@ -114,22 +105,5 @@ async function loadCI(){
   el("status-dot").className="dot ok";show("status-label","Verified GitHub Actions Wheel-30 measurement");
  }catch(e){el("status-dot").className="dot unavailable";show("status-label","No verified Wheel-30 CI measurement available yet")}
 }
-async function loadLocal(){
- try {
-  const r=await fetch("./wheel30-reported.json",{cache:"no-store"});if(!r.ok)throw Error();
-  const d=await r.json();
-  if(d.status!=="reported"||d.track!=="wheel-30"||d.source!=="developer-provided"||d.competitors?.length!==5)throw Error();
-  show("local-note",d.hardware.cpu_description+" · "+d.window_description+". These are local, developer-reported measurements.");
-  const body=el("local-rows");body.replaceChildren();
-  const own=d.competitors.find(x=>x.id==="odin-wheel30")?.passes;
-  if(!own)throw Error();
-  for(const item of d.competitors){
-   const tr=document.createElement("tr");
-   for(const value of [item.name,fmt(item.passes,0),item.id==="odin-wheel30"?"reference":fmt(own/item.passes,3)+"×"]){
-    const td=document.createElement("td");td.textContent=value;tr.appendChild(td);
-   }body.appendChild(tr);
-  }
- }catch(e){show("local-note","The developer-reported local record could not be loaded")}
-}
-Promise.all([loadCI(),loadLocal()]);
+loadCI();
 </script></body></html>
