@@ -25,11 +25,13 @@ jobs:
           allowed = {
               ".dockerignore", ".gitignore", "Dockerfile", "LICENSE", "README.md",
               ".github/workflows/verify.yml", "index.html", "results.json",
-              "wheel.html", "wheel210-reported.json", "base-intel12900h.json",
+              "wheel.html", "wheel30.html", "wheel210-reported.json", "wheel30-reported.json", "base-intel12900h.json",
               "wheel210/Dockerfile", "wheel210/README.md",
               "wheel210/main.odin", "wheel210/tests.odin",
+              "wheel30/Dockerfile", "wheel30/README.md", "wheel30/main.odin",
               "tools/ci_report.py", "tools/test_ci_report.py",
               "tools/wheel_ci_report.py", "tools/test_wheel_ci_report.py",
+              "tools/wheel30_ci_report.py", "tools/test_wheel30_ci_report.py",
               "tools/test_base_intel_report.py",
               "src/main.odin", "src/tests.odin",
               "src/get_num_cores_linux.odin", "src/get_num_cores_windows.odin",
@@ -150,9 +152,56 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
+  wheel30:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build checksum-pinned Odin and Wheel-30 source
+        run: docker build --target build -t wheel30:build wheel30
+      - name: Compare prime membership against independent oracle at four limits
+        run: |
+          set -euo pipefail
+          for limit in 100 10000 1000000 10000000; do
+            docker run --rm -e TEST_LIMIT="$limit" wheel30:build sh -ec '
+              odin build main.odin -file -o:speed -microarch:native -no-bounds-check \
+                -define:CHECK=true -define:RUN_SECONDS=0 -define:LIMIT="$TEST_LIMIT" -out:check-primes
+              ./check-primes 2>&1 | tee /tmp/check-output.txt
+              grep -q "CHECK: 0 mismatches" /tmp/check-output.txt
+              grep -q "Valid: true" /tmp/check-output.txt
+            '
+          done
+      - name: Record checksum-pinned Odin version
+        run: docker run --rm wheel30:build odin version > "$RUNNER_TEMP/wheel30-version.txt"
+      - name: Build Wheel-30 runtime
+        run: docker build -t wheel30:runtime wheel30
+      - name: Measure full five-second single-thread sieve
+        run: docker run --rm wheel30:runtime > "$RUNNER_TEMP/wheel30-output.txt" 2> "$RUNNER_TEMP/wheel30-stderr.txt"
+      - name: Generate validated Wheel-30 runner metadata
+        run: python3 tools/wheel30_ci_report.py --input "$RUNNER_TEMP/wheel30-output.txt" --version-file "$RUNNER_TEMP/wheel30-version.txt" --output "$RUNNER_TEMP/wheel30-pages/wheel30-ci.json"
+      - name: Upload Wheel-30 CI record
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel30-ci-${{ github.run_id }}
+          path: ${{ runner.temp }}/wheel30-pages/wheel30-ci.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Preserve Wheel-30 raw output
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel30-raw-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/wheel30-output.txt
+            ${{ runner.temp }}/wheel30-stderr.txt
+            ${{ runner.temp }}/wheel30-version.txt
+          if-no-files-found: error
+          retention-days: 90
+
   pages:
     if: github.event_name != 'pull_request'
-    needs: [correctness, wheel210]
+    needs: [correctness, wheel210, wheel30]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -175,9 +224,14 @@ jobs:
         with:
           name: wheel210-ci-${{ github.run_id }}
           path: site
+      - name: Download verified Wheel-30 result
+        uses: actions/download-artifact@v4
+        with:
+          name: wheel30-ci-${{ github.run_id }}
+          path: site
       - name: Assemble static site
         run: |
-          cp index.html wheel.html wheel210-reported.json base-intel12900h.json site/
+          cp index.html wheel.html wheel30.html wheel210-reported.json wheel30-reported.json base-intel12900h.json site/
           touch site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
