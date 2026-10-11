@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "reported",
+  "source": "developer-provided",
+  "track": "wheel-30",
+  "reported_date": "2026-10-11",
+  "limit": 1000000,
+  "classification": "Developer-reported Intel Xeon single-thread; not official PrimeView",
+  "window_description": "approximately 5 seconds per implementation",
+  "hardware": {
+    "cpu_description": "Intel Xeon with AVX2/AVX-512 (exact CPU model not supplied)"
+  },
+  "compiler": "Odin dev-2026-10 (as reported)",
+  "source_sha256": "75cfe0048f6300d6cf740ce1f6576ea9d38dc4e26965b27d17b90fb7df397d34",
+  "competitors": [
+    {
+      "id": "odin-wheel30",
+      "name": "Odin Wheel-30",
+      "passes": 105302
+    },
+    {
+      "id": "rust-pr1092",
+      "name": "Rust PR #1092 · CokieMiner",
+      "passes": 87166
+    },
+    {
+      "id": "assembly-pr1093",
+      "name": "Assembly PR #1093 · TACITVS",
+      "passes": 86413
+    },
+    {
+      "id": "c-solution5",
+      "name": "C solution_5 · extend",
+      "passes": 60659
+    },
+    {
+      "id": "c-solution2",
+      "name": "C solution_2 · 5760of30030",
+      "passes": 29946
+    }
+  ],
+  "correctness_report": "User reports 78,498 primes at one million and zero mismatches to naive sieve at selected limits 100..10,000,000.",
+  "limitations": [
+    "Raw local logs, complete CPU SKU, thermal conditions and compiler provenance not supplied.",
+    "Rust PR #1092 compiled with Rust 1.75 plus nightly flags instead of the PR's Rust 1.99.",
+    "Zig PRs #1090 and #1094 were not run.",
+    "No official PrimeView ranking and proposed faithful=yes tags need maintainer review."
+  ]
+}
